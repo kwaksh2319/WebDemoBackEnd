@@ -3,6 +3,7 @@ package kr.co.kshproject.webDemo.Applicaiton;
 
 import kr.co.kshproject.webDemo.Domain.Baskets;
 import kr.co.kshproject.webDemo.Domain.BasketsDao;
+import kr.co.kshproject.webDemo.Domain.BasketsWithProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,8 @@ public class BasketService {
         basketsDao.save(baskets);
     }
 
-    public List<Baskets> findAll(String userName, int page, int size) {
-        return basketsDao.findAll(userName,page,size);
+    public List<BasketsWithProduct> findAll(String userName, String status, int page, int size) {
+        return basketsDao.findAll(userName,status,page,size);
     }
 
     public List<Baskets> findAll(String userName) {

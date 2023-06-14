@@ -27,7 +27,6 @@ public class AdminController {
     public String getAdmin(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
@@ -37,7 +36,6 @@ public class AdminController {
     public String getAdminProductList(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
@@ -48,7 +46,6 @@ public class AdminController {
     public String getAdminNoticeList(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
@@ -60,7 +57,6 @@ public class AdminController {
     public String deleteAdminNoticeDetail(@PathVariable Long id,HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
@@ -74,7 +70,6 @@ public class AdminController {
     public String deleteAdminProductDetail(@PathVariable Long id,HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
@@ -87,7 +82,6 @@ public class AdminController {
     public String getAdminPostRegist(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
@@ -98,7 +92,6 @@ public class AdminController {
     public String getAdminCustomer(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }

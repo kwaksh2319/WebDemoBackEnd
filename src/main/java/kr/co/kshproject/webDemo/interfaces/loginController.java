@@ -69,15 +69,11 @@ public class loginController {
     @GetMapping("/Main")
     public String loginUser(HttpServletRequest request){
         String ipAddress = request.getRemoteAddr();
-        System.out.println(ipAddress);
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
-        System.out.println("success");
         return "forward:/index.html";
     }
 }

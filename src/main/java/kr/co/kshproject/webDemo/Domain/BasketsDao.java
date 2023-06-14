@@ -7,10 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -21,31 +18,34 @@ public class BasketsDao {
     private EntityManagerFactory entityManagerFactory;
 
     //장바구니 리스트
-    public List<Baskets> findAll(String userName, int page, int size) {
-        List<Baskets> basketsList = null;
+    public List<BasketsWithProduct> findAll(String userName,String status, int page, int size) {
+        List<BasketsWithProduct> basketsList = null;
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try{
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<Baskets> criteriaQuery = criteriaBuilder.createQuery(Baskets.class);
+            CriteriaQuery<BasketsWithProduct> criteriaQuery = criteriaBuilder.createQuery(BasketsWithProduct.class);
 
             Root<Baskets> root = criteriaQuery.from(Baskets.class);
 
+            Join<Baskets, Product> fileJoin = root.join("product", JoinType.INNER);
+
             // 복합키 검색 조건 생성
-            Predicate compositeKeyPredicate = criteriaBuilder.equal(root.get("basketId").get("usersId"), userName);
+            Predicate compositeKeyPredicate = criteriaBuilder.equal(root.get("basketId").get("usersId"),userName );
 
             // 상태 검색 조건 생성
-            Predicate statusPredicate = criteriaBuilder.equal(root.get("status"), "B");
+            Predicate statusPredicate = criteriaBuilder.equal(root.get("status"), status);
 
             // 검색 조건 결합
             Predicate finalPredicate = criteriaBuilder.and(compositeKeyPredicate, statusPredicate);
 
-            criteriaQuery.select(root);
+            //검색
+            criteriaQuery.select(criteriaBuilder.construct( BasketsWithProduct.class, root, fileJoin ));
             criteriaQuery.where(finalPredicate);
 
-            TypedQuery<Baskets> typedQuery = entityManager.createQuery(criteriaQuery);
-           // typedQuery.setFirstResult((page - 1) * size);
-           // typedQuery.setMaxResults(size);
-            //    criteriaQuery.where(criteriaBuilder.equal(root.get("id"), 1)); 조건 추가시
+            TypedQuery<BasketsWithProduct> typedQuery = entityManager.createQuery(criteriaQuery);
+            typedQuery.setFirstResult((page - 1) * size);
+            typedQuery.setMaxResults(size);
+
             // 페이지 조건
             basketsList = typedQuery.getResultList();
         }catch (Exception e){
@@ -97,13 +97,11 @@ public class BasketsDao {
 
     //장바구니 등록
     public void save(Baskets baskets) {
-        System.out.println("등록");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try{
             entityManager.getTransaction().begin();
             entityManager.persist(baskets);
             entityManager.getTransaction().commit();
-
         }catch (Exception e){
             entityManager.getTransaction().rollback();
             e.printStackTrace();

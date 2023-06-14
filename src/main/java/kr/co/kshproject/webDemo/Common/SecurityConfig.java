@@ -26,7 +26,7 @@ public class SecurityConfig{
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        System.out.println("test");
+
         http.authorizeRequests()
                 .antMatchers("/Admin/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
@@ -43,6 +43,7 @@ public class SecurityConfig{
                 .antMatchers("/Api/**").hasAnyAuthority("ROLE_ADMIN","ROLE_CUSTOM")
                 .antMatchers("/api/**").hasAnyAuthority("ROLE_ADMIN","ROLE_CUSTOM")
                 .antMatchers("/logout/**").hasAnyAuthority("ROLE_ADMIN","ROLE_CUSTOM")
+                .antMatchers("/ChatGptApi/**").hasAnyAuthority("ROLE_ADMIN","ROLE_CUSTOM")
                 .antMatchers("/").permitAll()
              //   .antMatchers("/h2-console/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().permitAll()

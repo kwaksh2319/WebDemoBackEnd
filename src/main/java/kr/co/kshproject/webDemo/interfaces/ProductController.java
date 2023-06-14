@@ -25,8 +25,6 @@ public class ProductController {
         System.out.println(imageUrl);
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
@@ -40,8 +38,6 @@ public class ProductController {
         List<Product> products = null;
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return products;
         }
@@ -70,8 +66,6 @@ public class ProductController {
         Product product = null;
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return product;
         }
@@ -92,8 +86,6 @@ public class ProductController {
     public ResponseEntity<?> PostProducts(@RequestBody Product product,HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return ResponseEntity.badRequest().build();
         }
@@ -106,8 +98,6 @@ public class ProductController {
     public ResponseEntity<?> updatePatch(@PathVariable Long id, @RequestBody Product newProduct,HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-
-            System.out.println("not success");
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return ResponseEntity.badRequest().build();
         }

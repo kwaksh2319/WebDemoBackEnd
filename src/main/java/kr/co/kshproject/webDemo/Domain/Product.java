@@ -20,11 +20,7 @@ public class Product {
     @SequenceGenerator(name = "PRODUCT_SEQ", sequenceName = "PRODUCT_SEQ", allocationSize = 1)
     @Column(name = "ID")
     private Long id; //key
-    /*
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id; //key
-*/
+
     @NotEmpty
     @Setter
     @Column(name = "PRODUCT_NAME")
@@ -48,6 +44,4 @@ public class Product {
     @Setter
     @Column(name = "DESCRIPTION")
     private String description;
-
-    //권한 관련 함수
 }
