@@ -43,13 +43,13 @@ public class BasketController {
             //todo
             basketsWithProducts=basketService.findAll(user.getUsername(),"B",1,10);
         }
-       if(basketsWithProducts.isEmpty()){
-           return ResponseEntity.badRequest().build();
-       }
-       System.out.println(basketsWithProducts.get(0).getBaskets().getBasketId());
+        if(basketsWithProducts.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        System.out.println(basketsWithProducts.get(0).getBaskets().getBindNumber());
+        System.out.println(basketsWithProducts.get(0).getProduct().getImageUrl());
 
         return ResponseEntity.ok(basketsWithProducts);
-
     }
 
     @PostMapping("/Basket/Post")
@@ -65,8 +65,8 @@ public class BasketController {
         Object attribute = session.getAttribute("user");
         if (attribute instanceof org.springframework.security.core.userdetails.User) {
             org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) attribute;
-           // notice.setUsername(user.getUsername());
-              userId=user.getUsername();
+            // notice.setUsername(user.getUsername());
+            userId=user.getUsername();
         }
         baskets.getBasketId().setUsersId(userId);
 
