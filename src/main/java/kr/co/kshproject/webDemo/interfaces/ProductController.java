@@ -34,7 +34,6 @@ public class ProductController {
     @GetMapping("/api/Products")
     @ResponseBody
     public List<Product> GetApiProducts(@RequestParam(value = "param", required = false) String imageUrl,HttpServletRequest request ){
-
         List<Product> products = null;
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
@@ -90,7 +89,6 @@ public class ProductController {
             return ResponseEntity.badRequest().build();
         }
         productService.save(product);
-        System.out.println("post products");
         return ResponseEntity.ok().build();
     }
 
@@ -102,13 +100,6 @@ public class ProductController {
             return ResponseEntity.badRequest().build();
         }
         try{
-            System.out.println("/api/Products/Patch");
-            System.out.println("id:"+id);
-            System.out.println("id:"+newProduct.getProductName());
-            System.out.println("id:"+newProduct.getDescription());
-            System.out.println("id:"+newProduct.getImageUrl());
-            System.out.println("id:"+newProduct.getPrice());
-
             productService.update(id,newProduct);
         }catch (Exception e){
             e.printStackTrace();

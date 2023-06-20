@@ -28,7 +28,6 @@ public class SignUpController {
 
     @PostMapping("/SignUp")
     public ResponseEntity<?> SignUp(@RequestBody Users usersData){
-        System.out.println(usersData.getId());
         try{
             signUpService.registerUser(usersData);
         }catch (Exception e){
