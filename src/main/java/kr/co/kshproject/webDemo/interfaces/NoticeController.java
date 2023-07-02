@@ -89,7 +89,6 @@ public class NoticeController {
         Object attribute = session.getAttribute("user");
         if (attribute instanceof org.springframework.security.core.userdetails.User) {
             org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) attribute;
-
             if(user.getUsername().equals(newNotice.getUsername())==false){
                 return ResponseEntity.badRequest().build();
             }

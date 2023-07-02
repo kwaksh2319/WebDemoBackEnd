@@ -39,7 +39,6 @@ public class AdminController {
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
-        System.out.println("/Admin/Product");
         return "forward:/index.html";
     }
     @GetMapping("/Admin/Post")
@@ -49,7 +48,6 @@ public class AdminController {
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
-        System.out.println("/Admin/Post");
         return "forward:/index.html";
     }
 
@@ -60,9 +58,7 @@ public class AdminController {
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
-        System.out.println("id:"+id);
         noticeService.deleteNoticeDetail(id);
-        System.out.println("/Admin/Notice/Delete/");
         return "redirect:/Admin/Post";
     }
 
@@ -74,7 +70,6 @@ public class AdminController {
             return "redirect:/fail";
         }
         productService.deleteProductDetail(id);
-        System.out.println("/Admin/Product/Delete/");
         return "redirect:/index.html";
     }
 
@@ -82,20 +77,16 @@ public class AdminController {
     public String getAdminPostRegist(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-            // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
-        System.out.println("/Admin/Post/Regist");
         return "forward:/index.html";
     }
     @GetMapping("/Admin/Customer")
     public String getAdminCustomer(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-            // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
-        System.out.println("/Admin/Customer");
         return "forward:/index.html";
     }
 }
