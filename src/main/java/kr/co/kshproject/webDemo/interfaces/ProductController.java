@@ -2,6 +2,7 @@ package kr.co.kshproject.webDemo.interfaces;
 
 import kr.co.kshproject.webDemo.Applicaiton.ProductService;
 import kr.co.kshproject.webDemo.Domain.Product;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 public class ProductController {
 
@@ -22,7 +24,6 @@ public class ProductController {
 
     @GetMapping("/Product")
     public String GetProduct(@RequestParam(value = "param", required = false) String imageUrl , HttpServletRequest request){
-        System.out.println(imageUrl);
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
@@ -55,8 +56,6 @@ public class ProductController {
                  products.add(tmpProduct);
              }
         }
-
-        System.out.println("get products");
         return products;
     }
     @GetMapping("/api/DetailProduct/{id}")

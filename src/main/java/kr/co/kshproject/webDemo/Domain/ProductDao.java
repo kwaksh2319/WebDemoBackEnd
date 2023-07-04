@@ -22,7 +22,6 @@ public class ProductDao {
     public void save(Product product) {
         EntityManager entityManager =null;
         try{
-            System.out.println("등록");
             entityManager = entityManagerFactory.createEntityManager();
             entityManager.getTransaction().begin();
             entityManager.persist(product);

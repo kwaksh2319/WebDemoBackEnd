@@ -1,7 +1,8 @@
 package kr.co.kshproject.webDemo.interfaces;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
-
+@Slf4j
 @RestController
 public class UsersController {
     //서비스 정의

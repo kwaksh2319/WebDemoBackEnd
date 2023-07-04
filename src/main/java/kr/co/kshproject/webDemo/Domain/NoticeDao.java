@@ -103,8 +103,7 @@ public class NoticeDao {
                 notice.setTitle(newNotice.getTitle());
                 notice.setEmail(newNotice.getEmail());
                 notice.setContents(newNotice.getContents());
-                System.out.println(newNotice.getContents());
-                //업데이트할 다른 필드들도 변경 가능 s
+
                 entityManager.merge(notice);
                 entityManager.getTransaction().commit();
                 entityManager.refresh(notice);

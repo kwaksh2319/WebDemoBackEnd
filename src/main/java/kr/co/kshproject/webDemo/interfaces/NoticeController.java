@@ -2,6 +2,7 @@ package kr.co.kshproject.webDemo.interfaces;
 
 import kr.co.kshproject.webDemo.Applicaiton.NoticeService;
 import kr.co.kshproject.webDemo.Domain.Notice;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+@Slf4j
 @Controller
 public class NoticeController {
     @Autowired
@@ -57,7 +59,6 @@ public class NoticeController {
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
-        System.out.println("redirect");
         return "forward:/index.html";
     }
 

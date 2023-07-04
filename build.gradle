@@ -33,6 +33,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework:spring-messaging'
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+
     // implementation 'org.springframework.security:spring-security-config:5.3.10'
     // implementation 'org.springframework.security:spring-security-web:5.3.10'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -47,10 +48,8 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
     testCompileOnly 'junit:junit:4.12'
     testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.1.0'
-
-}
-
-tasks.register('prepareKotlinBuildScriptModel'){
+    implementation('org.slf4j:jcl-over-slf4j')
+    implementation('ch.qos.logback:logback-classic')
 
 }
 

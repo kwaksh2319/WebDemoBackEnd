@@ -3,6 +3,7 @@ package kr.co.kshproject.webDemo.interfaces;
 import kr.co.kshproject.webDemo.Applicaiton.IpAddressService;
 import kr.co.kshproject.webDemo.Applicaiton.UsersDetailService;
 import kr.co.kshproject.webDemo.Domain.Users;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+@Slf4j
 @Controller
 public class loginController {
 
@@ -37,7 +39,6 @@ public class loginController {
     @PostMapping("/Main/Logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        System.out.println("logout");
         if (session != null) {
             session.invalidate(); // 세션 무효화
             return ResponseEntity.ok().build();

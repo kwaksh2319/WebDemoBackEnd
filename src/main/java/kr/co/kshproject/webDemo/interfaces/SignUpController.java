@@ -2,6 +2,7 @@ package kr.co.kshproject.webDemo.interfaces;
 
 import kr.co.kshproject.webDemo.Applicaiton.SignUpService;
 import kr.co.kshproject.webDemo.Domain.Users;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+@Slf4j
 @Controller
 public class SignUpController {
 
@@ -22,7 +24,6 @@ public class SignUpController {
 
     @GetMapping("/SignUp")
     public String SignUpUser(){
-        System.out.println("SignUp spring");
         return "forward:/index.html";
     }
 

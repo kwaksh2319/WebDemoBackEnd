@@ -5,6 +5,7 @@ import kr.co.kshproject.webDemo.Applicaiton.ProductService;
 import kr.co.kshproject.webDemo.Applicaiton.UsersDetailService;
 import kr.co.kshproject.webDemo.Domain.Baskets;
 import kr.co.kshproject.webDemo.Domain.BasketsWithProduct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+@Slf4j
 @Controller
 public class BasketController {
     @Autowired

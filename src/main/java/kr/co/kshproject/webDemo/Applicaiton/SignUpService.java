@@ -18,7 +18,6 @@ public class SignUpService {
 
     public void registerUser(Users users) {
         String hashedPassword=passwordEncoder.encode(users.getPassword());
-        System.out.println(hashedPassword);
         users.setPassword(hashedPassword);
         usersDao.save(users);
     }
