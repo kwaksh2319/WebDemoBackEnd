@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 public class UsersController {
-    //서비스 정의
+
 /*
     @Autowired
     private UsersServices usersServices; //서비스
@@ -51,8 +51,6 @@ public class UsersController {
         return ResponseEntity.created(location).body("{}");
     } */
     //user 등록       ( 회원가입 )
+//등록
 
-    //이메일 찾기
-
-    //비밀번호 찾기
 }
