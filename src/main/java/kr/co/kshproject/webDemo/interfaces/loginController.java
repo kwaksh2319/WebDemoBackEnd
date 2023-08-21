@@ -26,12 +26,10 @@ public class loginController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private UsersDetailService usersDetailService;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private IpAddressService ipAddressService;
 
@@ -51,6 +49,7 @@ public class loginController {
         String hashedPassword=passwordEncoder.encode(usersData.getPassword());
         String ipAddress = request.getRemoteAddr();
         UserDetails userDetails = usersDetailService.loadUserByUsername(usersData.getUsername());
+
         if(passwordEncoder.matches(usersData.getPassword(),userDetails.getPassword())){
             Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             if (authentication.isAuthenticated()) {

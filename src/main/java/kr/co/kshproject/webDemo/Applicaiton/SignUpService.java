@@ -17,6 +17,8 @@ public class SignUpService {
     private PasswordEncoder passwordEncoder;
 
     public void registerUser(Users users) {
+        String hashedPassword1=passwordEncoder.encode("1234");
+        System.out.println(hashedPassword1);
         String hashedPassword=passwordEncoder.encode(users.getPassword());
         users.setPassword(hashedPassword);
         usersDao.save(users);

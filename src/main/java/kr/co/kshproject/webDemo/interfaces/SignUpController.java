@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Slf4j
 @Controller
 public class SignUpController {
-
     //1.user list
     @Autowired
     private SignUpService signUpService;

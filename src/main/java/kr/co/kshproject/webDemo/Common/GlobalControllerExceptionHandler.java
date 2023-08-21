@@ -11,12 +11,4 @@ public class GlobalControllerExceptionHandler {
     public ResponseEntity<?> loginFail(){
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("403 Forbidden");
     }
-
-
-    /*
-    @GetMapping("/")
-    public String loginInit(HttpServletRequest request) {
-
-        return "forward:/index.html";
-    }*/
 }

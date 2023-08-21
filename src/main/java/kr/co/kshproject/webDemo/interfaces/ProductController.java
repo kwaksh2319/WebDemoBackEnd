@@ -45,6 +45,7 @@ public class ProductController {
             products = productService.findAll(1,10);
         }catch (Exception e){
             e.printStackTrace();
+            //TODO 예외처리 부분
             products = new ArrayList<>();
             Product tmpProduct = new Product();
             tmpProduct.setProductName("");

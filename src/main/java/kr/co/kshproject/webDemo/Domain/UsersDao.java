@@ -52,7 +52,7 @@ public class UsersDao {
         }catch (Exception e){
             e.printStackTrace();
         }
-        finally {  //ssaaa
+        finally {
             if(entityManager!=null){
                 entityManager.close();
             }

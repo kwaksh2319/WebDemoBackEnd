@@ -82,7 +82,6 @@ public class NoticeController {
     public ResponseEntity<?> updatePatch(@PathVariable Long id, @RequestBody Notice newNotice,HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return ResponseEntity.badRequest().build();
         }

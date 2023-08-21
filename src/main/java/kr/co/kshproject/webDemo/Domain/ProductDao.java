@@ -48,8 +48,9 @@ public class ProductDao {
             TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
             typedQuery.setFirstResult((page - 1) * size);
             typedQuery.setMaxResults(size);
-            //    criteriaQuery.where(criteriaBuilder.equal(root.get("id"), 1)); 조건 추가시
-            // 페이지 조건
+            //TODO
+            //criteriaQuery.where(criteriaBuilder.equal(root.get("id"), 1)); 조건 추가시
+            //페이지 조건
              productList = typedQuery.getResultList();
         }catch (Exception e){
             e.printStackTrace();
