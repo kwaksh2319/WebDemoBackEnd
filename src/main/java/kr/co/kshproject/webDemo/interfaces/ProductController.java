@@ -5,7 +5,6 @@ import kr.co.kshproject.webDemo.Domain.Product;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 public class ProductController {
 
     //1.user list

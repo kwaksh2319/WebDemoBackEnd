@@ -1,5 +1,6 @@
 package kr.co.kshproject.webDemo.Applicaiton;
 
+import kr.co.kshproject.webDemo.Applicaiton.Notice.NoticeServiceInterface;
 import kr.co.kshproject.webDemo.Domain.Notice;
 import kr.co.kshproject.webDemo.Domain.NoticeDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class NoticeService implements NoticeServiceInterface{
+public class NoticeService implements NoticeServiceInterface {
     @Autowired
     private NoticeDao noticeDao;
 
