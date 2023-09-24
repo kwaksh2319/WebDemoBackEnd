@@ -36,6 +36,7 @@ dependencies {
 
     // implementation 'org.springframework.security:spring-security-config:5.3.10'
     // implementation 'org.springframework.security:spring-security-web:5.3.10'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.apache.commons:commons-text:1.9'
     implementation 'junit:junit:4.13.1'

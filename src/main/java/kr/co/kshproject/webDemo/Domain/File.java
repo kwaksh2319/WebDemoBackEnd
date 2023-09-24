@@ -1,5 +1,6 @@
-package kr.co.kshproject.webDemo.Domain;
-
+/*package kr.co.kshproject.webDemo.Domain;*/
+/*
+import kr.co.kshproject.webDemo.Domain.Notice.Notice;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,4 +33,4 @@ public class File {
     @JoinColumn(name = "notice_id")
     private Notice notice;
 
-}
+}*/

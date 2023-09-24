@@ -1,5 +1,7 @@
-package kr.co.kshproject.webDemo.Domain;
+/*package kr.co.kshproject.webDemo.Domain;*/
+/*
 
+import kr.co.kshproject.webDemo.Domain.Notice.Notice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -141,4 +143,4 @@ public class NoticeDao {
             }
         }
     }
-}
+}*/

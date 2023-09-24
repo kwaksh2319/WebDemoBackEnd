@@ -1,5 +1,6 @@
-package kr.co.kshproject.webDemo.Domain;
-
+/*
+package kr.co.kshproject.webDemo.Domain;*/
+/*
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 
@@ -48,4 +49,4 @@ public class Notice {
     @OneToMany(mappedBy = "notice",fetch = FetchType.EAGER)
     private List<File> file= new ArrayList<>();
 
-}
+}*/
