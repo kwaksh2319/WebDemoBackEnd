@@ -1,10 +1,12 @@
 package kr.co.kshproject.webDemo.Domain.Notice;
 
+import kr.co.kshproject.webDemo.Domain.Comment.Comment;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Notice")
@@ -40,9 +42,6 @@ public class Notice {
     @Column(name = "created_date")
     private String createdDate;
 
-    //1: n 관계
-   // @JsonIgnore
-   // @OneToMany(mappedBy = "notice",fetch = FetchType.EAGER)
-  //  private List<File> file= new ArrayList<>();
-
+    @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
 }

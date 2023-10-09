@@ -9,5 +9,6 @@ public interface NoticeService {
     Notice save(Notice notice);
     List<Notice> findAll();
     Optional<Notice> findById(Long id);
+    Notice update(Long id,Notice notice);
     void deleteAll();
 }

@@ -12,8 +12,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -37,7 +39,7 @@ class NoticeControllerTest {
     @Test
     void save() throws Exception {
         //생성
-        Notice notice= new Notice(null,"test","title","cotenst","email","date");
+        Notice notice= new Notice(null,"test","title","cotenst","email","date",null);
 
         //저장
         when(noticeService.save(any(Notice.class))).thenReturn(notice);
@@ -52,8 +54,8 @@ class NoticeControllerTest {
     @Test
     void findAll() throws Exception {
         //생성
-        Notice notice1= new Notice(null,"test1","title","cotenst","email","date");
-        Notice notice2= new Notice(null,"test2","title","cotenst","email","date");
+        Notice notice1= new Notice(null,"test1","title","cotenst","email","date",null);
+        Notice notice2= new Notice(null,"test2","title","cotenst","email","date",null);
 
         //저장
         when(noticeService.findAll()).thenReturn(Arrays.asList(notice1, notice2));
@@ -67,7 +69,7 @@ class NoticeControllerTest {
     void findById() throws Exception {
         //생성
         Long id = 1L;
-        Notice notice= new Notice(null,"test","title","cotenst","email","date");
+        Notice notice= new Notice(null,"test","title","cotenst","email","date",null);
 
         //저장
         when(noticeService.save(any(Notice.class))).thenReturn(notice);
@@ -79,6 +81,19 @@ class NoticeControllerTest {
     }
 
     @Test
-    void deleteAll() {
+    void update() throws Exception {
+        Long id = 1L;
+        Notice existingNotice = new Notice(id, "test","oldTitle", "oldContent", "oldEmail", "oldDate",null);
+        Notice updatedNotice = new Notice(id,"test", "newTitle", "newContent", "oldEmail", "oldDate",null);
+
+        when(noticeService.findById(id)).thenReturn(Optional.of(existingNotice));
+        when(noticeService.update(eq(id), any(Notice.class))).thenReturn(updatedNotice);
+
+        mockMvc.perform(put("/notice/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"title\":\"newTitle\", \"contents\":\"newContent\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("newTitle"))
+                .andExpect(jsonPath("$.contents").value("newContent"));
     }
 }

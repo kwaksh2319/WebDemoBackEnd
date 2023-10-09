@@ -18,11 +18,11 @@ public class NoticeController {
 
     @Autowired
     public NoticeController(NoticeService noticeService){
-       this.noticeService=noticeService;
+        this.noticeService=noticeService;
    }
 
    @PostMapping
-   public ResponseEntity<Notice> save(Notice notice){
+   public ResponseEntity<Notice> save(@RequestBody Notice notice){
         return ResponseEntity.ok(noticeService.save(notice));
    }
 
@@ -34,6 +34,11 @@ public class NoticeController {
    @GetMapping("/{id}")
    public Optional<Notice> findById(@PathVariable Long id){
         return noticeService.findById(id);
+   }
+
+   @PutMapping("/{id}")
+   public ResponseEntity<Notice> update(@PathVariable Long id, @RequestBody Notice notice){
+       return ResponseEntity.ok(noticeService.update(id,notice));
    }
 
    @DeleteMapping
