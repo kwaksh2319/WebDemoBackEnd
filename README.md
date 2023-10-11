@@ -6,4 +6,4 @@ WebDemoBackEnd
 운영 웹 서버 
 Live [here](https://ddubi.site/)
 
-설명 [here](https://kwaksh2319.tistory.com/category/%EC%9B%B9/Spring%20vue%20%EC%9B%B9%20%EA%B0%9C%EB%B0%9C)
+설명click!![here](https://kwaksh2319.tistory.com/category/%EC%9B%B9/Spring%20vue%20%EC%9B%B9%20%EA%B0%9C%EB%B0%9C)
