@@ -1,6 +1,5 @@
 package kr.co.kshproject.webDemo.Applicaiton;
 
-import kr.co.kshproject.webDemo.Applicaiton.Product.ProductServiceInterface;
 import kr.co.kshproject.webDemo.Domain.Product;
 import kr.co.kshproject.webDemo.Domain.ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ProductService implements ProductServiceInterface {
+public class ProductService implements ProductServiceInterface{
     @Autowired
     private ProductDao productDao;
 

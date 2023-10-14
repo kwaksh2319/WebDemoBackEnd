@@ -1,6 +1,5 @@
-/*
-package kr.co.kshproject.webDemo.Domain;*/
-/*
+package kr.co.kshproject.webDemo.Domain;
+
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 
@@ -9,13 +8,12 @@ import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
+@Getter
 @Table(name = "Notice")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 public class Notice {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NOTICE_SEQ")
@@ -49,4 +47,4 @@ public class Notice {
     @OneToMany(mappedBy = "notice",fetch = FetchType.EAGER)
     private List<File> file= new ArrayList<>();
 
-}*/
+}

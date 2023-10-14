@@ -44,9 +44,8 @@ public class SecurityConfig{
                 .antMatchers("/api/**").hasAnyAuthority("ROLE_ADMIN","ROLE_CUSTOM")
                 .antMatchers("/logout/**").hasAnyAuthority("ROLE_ADMIN","ROLE_CUSTOM")
                 .antMatchers("/ChatGptApi/**").hasAnyAuthority("ROLE_ADMIN","ROLE_CUSTOM")
-                .antMatchers("/SignUp/**").permitAll()
                 .antMatchers("/").permitAll()
-
+             //   .antMatchers("/h2-console/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .headers().frameOptions().disable() // H2 콘솔 사용을 위해 X-Frame-Options 비활성화
@@ -55,6 +54,35 @@ public class SecurityConfig{
         http.authenticationProvider(myAuthenticationProvider);
         return http.build();
     }
+    /*
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.requiresChannel()
+            .anyRequest().requiresSecure()
+            .and()
+            .portMapper()
+            .http(80).mapsTo(443)
+            .and()
+            .authorizeRequests()
+            .antMatchers("/h2-console/**").hasIpAddress("220.95.242.231")
+            .antMatchers("/Admin/**").hasAuthority("ROLE_ADMIN")
+            .antMatchers("/Login/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CUSTOM")
+            .antMatchers("/").permitAll()
+            .anyRequest().permitAll()
+            .and()
+            .headers()
+            .httpStrictTransportSecurity()
+            .includeSubDomains(true)
+            .maxAgeInSeconds(31536000) // 1 year
+            .and()
+            .frameOptions().disable()
+            .and()
+            .csrf().disable();
+    http.authenticationProvider(myAuthenticationProvider);
+    return http.build();
+}
+*/
+
 
     @Bean
     public UserDetailsService userDetailsService() {

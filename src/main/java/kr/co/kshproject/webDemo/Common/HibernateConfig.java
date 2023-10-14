@@ -53,8 +53,20 @@ public class HibernateConfig {
         config.setConnectionTimeout(Long.parseLong(env.getProperty("spring.datasource.hikari.connection-timeout")));
         config.setMaxLifetime(Long.parseLong(env.getProperty("spring.datasource.hikari.max-lifetime")));
         config.setIdleTimeout(Long.parseLong(env.getProperty("spring.datasource.hikari.idle-timeout")));
+      //  config.setConnectionTestQuery(env.getProperty("spring.datasource.hikari.connection-test-query"));
         return new HikariDataSource(config);
     }
+/*
+    @Bean
+    public DataSource dataSource() {
+        return DataSourceBuilder.create()
+                .driverClassName(env.getProperty("spring.datasource.driver-class-name"))
+                .url(env.getProperty("spring.datasource.url"))
+                .username(env.getProperty("spring.datasource.username"))
+                .password(env.getProperty("spring.datasource.password"))
+                .(env.getProperty("spring.datasource.hikari"))
+                .build();
+    }*/
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
@@ -69,6 +81,8 @@ public class HibernateConfig {
         properties.setProperty("hibernate.dialect", env.getProperty("spring.jpa.hibernate.dialect"));
         properties.setProperty("hibernate.show_sql", env.getProperty("spring.jpa.show-sql"));
         properties.setProperty("hibernate.ddl-auto",env.getProperty("spring.jpa.hibernate.ddl-auto"));
+     //   properties.setProperty("hibernate.format_sql", env.getProperty("spring.jpa.format_sql")); // SQL 문을 포맷팅해서 로깅에 출력
+      //  properties.setProperty("hibernate.use_sql_comments", env.getProperty("spring.jpa.use_sql_comments")); // SQL 문에 주석 추가하여 로깅에 출력
         properties.setProperty("hibernate.generate_statistics", "false"); // Hibernate의 통계 정보를 로깅에 출력
         return properties;
     }

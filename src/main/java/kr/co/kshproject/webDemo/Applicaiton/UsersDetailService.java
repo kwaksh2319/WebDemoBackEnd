@@ -42,7 +42,7 @@ public class UsersDetailService implements UserDetailsService {
         }else{
             role = "";
         }
-
+        System.out.println(role);
         List<String> roles=new LinkedList<>();
         roles.add(role);
 

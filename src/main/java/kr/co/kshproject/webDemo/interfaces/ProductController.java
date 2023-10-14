@@ -2,9 +2,9 @@ package kr.co.kshproject.webDemo.interfaces;
 
 import kr.co.kshproject.webDemo.Applicaiton.ProductService;
 import kr.co.kshproject.webDemo.Domain.Product;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
-@RestController
+@Controller
 public class ProductController {
 
     //1.user list
@@ -23,6 +22,7 @@ public class ProductController {
 
     @GetMapping("/Product")
     public String GetProduct(@RequestParam(value = "param", required = false) String imageUrl , HttpServletRequest request){
+        System.out.println(imageUrl);
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
@@ -34,6 +34,7 @@ public class ProductController {
     @GetMapping("/api/Products")
     @ResponseBody
     public List<Product> GetApiProducts(@RequestParam(value = "param", required = false) String imageUrl,HttpServletRequest request ){
+
         List<Product> products = null;
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
@@ -44,7 +45,6 @@ public class ProductController {
             products = productService.findAll(1,10);
         }catch (Exception e){
             e.printStackTrace();
-            //TODO 예외처리 부분
             products = new ArrayList<>();
             Product tmpProduct = new Product();
             tmpProduct.setProductName("");
@@ -56,6 +56,8 @@ public class ProductController {
                  products.add(tmpProduct);
              }
         }
+
+        System.out.println("get products");
         return products;
     }
     @GetMapping("/api/DetailProduct/{id}")
@@ -88,6 +90,7 @@ public class ProductController {
             return ResponseEntity.badRequest().build();
         }
         productService.save(product);
+        System.out.println("post products");
         return ResponseEntity.ok().build();
     }
 
@@ -99,6 +102,13 @@ public class ProductController {
             return ResponseEntity.badRequest().build();
         }
         try{
+            System.out.println("/api/Products/Patch");
+            System.out.println("id:"+id);
+            System.out.println("id:"+newProduct.getProductName());
+            System.out.println("id:"+newProduct.getDescription());
+            System.out.println("id:"+newProduct.getImageUrl());
+            System.out.println("id:"+newProduct.getPrice());
+
             productService.update(id,newProduct);
         }catch (Exception e){
             e.printStackTrace();

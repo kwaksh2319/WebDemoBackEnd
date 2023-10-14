@@ -19,6 +19,10 @@ public class UsersDao {
 
     public void save(Users user) {
         try{
+
+            System.out.println("등록");
+            System.out.println(user.getUsername());
+            System.out.println(user.getPassword());
             EntityManager entityManager = entityManagerFactory.createEntityManager();
             entityManager.getTransaction().begin();
             entityManager.persist(user);
@@ -52,7 +56,7 @@ public class UsersDao {
         }catch (Exception e){
             e.printStackTrace();
         }
-        finally {
+        finally {  //ssaaa
             if(entityManager!=null){
                 entityManager.close();
             }

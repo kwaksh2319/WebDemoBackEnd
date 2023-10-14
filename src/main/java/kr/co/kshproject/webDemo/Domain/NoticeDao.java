@@ -1,7 +1,5 @@
-/*package kr.co.kshproject.webDemo.Domain;*/
-/*
+package kr.co.kshproject.webDemo.Domain;
 
-import kr.co.kshproject.webDemo.Domain.Notice.Notice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -35,8 +33,7 @@ public class NoticeDao {
             TypedQuery<Notice> typedQuery = entityManager.createQuery(criteriaQuery);
             typedQuery.setFirstResult((page - 1) * size);
             typedQuery.setMaxResults(size);
-            //TODO
-            //criteriaQuery.where(criteriaBuilder.equal(root.get("id"), 1)); 조건 추가시
+            //    criteriaQuery.where(criteriaBuilder.equal(root.get("id"), 1)); 조건 추가시
             // 페이지 조건
             noticeList = typedQuery.getResultList();
 
@@ -106,7 +103,8 @@ public class NoticeDao {
                 notice.setTitle(newNotice.getTitle());
                 notice.setEmail(newNotice.getEmail());
                 notice.setContents(newNotice.getContents());
-
+                System.out.println(newNotice.getContents());
+                //업데이트할 다른 필드들도 변경 가능 s
                 entityManager.merge(notice);
                 entityManager.getTransaction().commit();
                 entityManager.refresh(notice);
@@ -143,4 +141,4 @@ public class NoticeDao {
             }
         }
     }
-}*/
+}

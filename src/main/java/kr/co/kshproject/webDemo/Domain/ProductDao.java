@@ -22,6 +22,7 @@ public class ProductDao {
     public void save(Product product) {
         EntityManager entityManager =null;
         try{
+            System.out.println("등록");
             entityManager = entityManagerFactory.createEntityManager();
             entityManager.getTransaction().begin();
             entityManager.persist(product);
@@ -48,9 +49,8 @@ public class ProductDao {
             TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
             typedQuery.setFirstResult((page - 1) * size);
             typedQuery.setMaxResults(size);
-            //TODO
-            //criteriaQuery.where(criteriaBuilder.equal(root.get("id"), 1)); 조건 추가시
-            //페이지 조건
+            //    criteriaQuery.where(criteriaBuilder.equal(root.get("id"), 1)); 조건 추가시
+            // 페이지 조건
              productList = typedQuery.getResultList();
         }catch (Exception e){
             e.printStackTrace();
