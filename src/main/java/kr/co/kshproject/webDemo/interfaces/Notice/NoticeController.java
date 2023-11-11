@@ -2,6 +2,7 @@ package kr.co.kshproject.webDemo.interfaces.Notice;
 
 import kr.co.kshproject.webDemo.Applicaiton.Notice.NoticeService;
 import kr.co.kshproject.webDemo.Domain.Notice.Notice;
+import kr.co.kshproject.webDemo.Domain.Notice.NoticeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +28,31 @@ public class NoticeController {
    }
 
    @GetMapping
-    public ResponseEntity<List<Notice>> findAll(){
-        return ResponseEntity.ok( noticeService.findAll());
+    public ResponseEntity<List<NoticeDTO>> findAll(){
+        return ResponseEntity.ok( noticeService.findAllWithComments());
    }
 
    @GetMapping("/{id}")
-   public Optional<Notice> findById(@PathVariable Long id){
-        return noticeService.findById(id);
+   public ResponseEntity<Notice> findWithCommentsById(@PathVariable Long id){
+        log.info("controller startS");
+        try{
+            Optional<Notice> notice=noticeService.findWithCommentsById(id);
+            if(notice.isPresent()){
+                log.info("present");
+            }else{
+                log.info("not present");
+            }
+               //log.info(notice.get().getComments().toString());
+              log.info(notice.get().getTitle());
+            return ResponseEntity.ok( notice.get() );
+
+        }catch (Exception e){
+            log.info("errrrorrrrr "+e.toString());
+
+        }
+
+
+        return ResponseEntity.ok( null );
    }
 
    @PutMapping("/{id}")

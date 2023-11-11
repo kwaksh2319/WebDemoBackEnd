@@ -1,4 +1,5 @@
 package kr.co.kshproject.webDemo.Domain.Comment;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import kr.co.kshproject.webDemo.Domain.Notice.Notice;
 import lombok.*;
 import javax.persistence.*;
@@ -16,8 +17,10 @@ public class Comment {
     @SequenceGenerator(name = "COMMENT_SEQ", sequenceName = "COMMENT_SEQ", allocationSize = 1)
     private Long id;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="notice_id")
+    @Setter
     private Notice notice;
 
     @NotEmpty

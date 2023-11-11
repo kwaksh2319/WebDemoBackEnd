@@ -80,9 +80,10 @@ public class BasketsDao {
             criteriaQuery.where(finalPredicate);
 
             TypedQuery<Baskets> typedQuery = entityManager.createQuery(criteriaQuery);
+            // TODO
             // typedQuery.setFirstResult((page - 1) * size);
             // typedQuery.setMaxResults(size);
-            //    criteriaQuery.where(criteriaBuilder.equal(root.get("id"), 1)); 조건 추가시
+            //  criteriaQuery.where(criteriaBuilder.equal(root.get("id"), 1)); 조건 추가시
             // 페이지 조건
             basketsList = typedQuery.getResultList();
         }catch (Exception e){
@@ -113,15 +114,13 @@ public class BasketsDao {
     }
 
     //장바구니 삭제 및 결제
-    //update로 처리
+    // update로 처리
     public void update(String bindNumber,String status) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try{
             entityManager.getTransaction().begin();
             Baskets baskets = entityManager.find(Baskets.class, bindNumber);
             if (baskets != null) {
-               // baskets.setStatus(status);
-
                 // 업데이트할 다른 필드들도 변경 가능
                 entityManager.merge(baskets);
                 entityManager.getTransaction().commit();

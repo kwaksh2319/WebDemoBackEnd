@@ -1,5 +1,6 @@
 package kr.co.kshproject.webDemo.Domain.Notice;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import kr.co.kshproject.webDemo.Domain.Comment.Comment;
 import lombok.*;
 
@@ -42,6 +43,8 @@ public class Notice {
     @Column(name = "created_date")
     private String createdDate;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
+
 }

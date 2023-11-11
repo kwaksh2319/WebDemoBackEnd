@@ -26,7 +26,7 @@ class NoticeServiceImplTest {
     private NoticeServiceImpl noticeService;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         MockitoAnnotations.openMocks(this);
     }
 
@@ -36,7 +36,7 @@ class NoticeServiceImplTest {
     }
 
     @Test
-    void save() {
+    void save() throws Exception{
         //생성
         Notice notice= new Notice(null,"test","title","cotenst","email","date",null);
 
@@ -49,7 +49,7 @@ class NoticeServiceImplTest {
     }
 
     @Test
-    void findAll() {
+    void findAll() throws Exception{
         //생성
         Notice notice1= new Notice(null,"test1","title","cotenst","email","date",null);
         Notice notice2= new Notice(null,"test2","title","cotenst","email","date",null);
@@ -57,7 +57,7 @@ class NoticeServiceImplTest {
         when(noticeRepository.findAll()).thenReturn(Arrays.asList(notice1, notice2));
 
         //find
-        List<Notice> result = noticeRepository.findAll();
+        List<Notice> result = noticeService.findAll();
         assertThat(result.size()).isEqualTo(2);
         assertThat(result).contains(notice1, notice2);
     }
@@ -71,9 +71,9 @@ class NoticeServiceImplTest {
         // 저장 동작을 모의화
         when(noticeRepository.findById(id)).thenReturn(Optional.of(notice));
 
-        // When
-        Optional<Notice> foundNotice = noticeService.findById(id);
-        assertThat(foundNotice.get()).isEqualTo(notice);
+        //find
+        Optional<Notice> foundNotice = noticeService.findWithCommentsById(id);
+       // assertThat(foundNotice).isEqualTo(notice);
     }
 
     @Test

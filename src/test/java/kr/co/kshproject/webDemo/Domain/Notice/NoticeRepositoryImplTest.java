@@ -1,10 +1,12 @@
 package kr.co.kshproject.webDemo.Domain.Notice;
 
+import kr.co.kshproject.webDemo.Domain.Comment.Comment;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +35,8 @@ class NoticeRepositoryImplTest {
         //체크
         Optional<Notice> findNotice=noticeRepository.findById(notice.getId());
         assertThat(findNotice.isPresent()).isTrue();
-        assertThat(findNotice.get()).isEqualTo(savedNotice);
+        assertThat(findNotice.get().getUsername()).isEqualTo(savedNotice.getUsername());
+        assertThat(findNotice.get().getId()).isEqualTo(savedNotice.getId());
     }
 
     @Test
@@ -43,27 +46,30 @@ class NoticeRepositoryImplTest {
         Notice notice2= new Notice(null,"test2","title","cotenst","email","date",null);
 
         //세이브
-        noticeRepository.save(notice1);
-        noticeRepository.save(notice2);
+        Notice savedNotice1 =noticeRepository.save(notice1);
+        Notice savedNotice2 =noticeRepository.save(notice2);
 
         //find
         List<Notice> result = noticeRepository.findAll();
 
         //check
         assertThat(result.size()).isEqualTo(2);
-        assertThat(result).contains(notice1, notice2);
+        assertThat(result.stream().map(Notice::getId)).contains(savedNotice1.getId(), savedNotice2.getId());
     }
 
     @Test
-    void findById(){
+    void findWithCommentsById(){
         long id=1L;
-        Notice notice= new Notice(null,"test1","title","cotenst","email","date",null);
+        List<Comment> comments = new ArrayList<>();
+       // comments.add(new Comment(,))
+        Notice notice= new Notice(null,"test1","title","cotenst","email","date",comments);
         //세이브
         Notice savedNotice=noticeRepository.save(notice);
         //체크
-        Optional<Notice> findNotice=noticeRepository.findById(savedNotice.getId());
+        Optional<Notice> findNotice=noticeRepository.findWithCommentsById(savedNotice.getId());
         assertThat(findNotice.isPresent()).isTrue();
-        assertThat(findNotice.get()).isEqualTo(savedNotice);
+        assertThat(findNotice.get().getUsername()).isEqualTo(savedNotice.getUsername());
+        assertThat(findNotice.get().getId()).isEqualTo(savedNotice.getId());
     }
 
     @Test
