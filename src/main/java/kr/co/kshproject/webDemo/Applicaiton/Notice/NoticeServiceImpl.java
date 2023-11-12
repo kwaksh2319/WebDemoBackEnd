@@ -2,7 +2,6 @@ package kr.co.kshproject.webDemo.Applicaiton.Notice;
 
 import kr.co.kshproject.webDemo.Domain.Notice.Notice;
 import kr.co.kshproject.webDemo.Domain.Notice.NoticeCustomRepository;
-import kr.co.kshproject.webDemo.Domain.Notice.NoticeDTO;
 import kr.co.kshproject.webDemo.Domain.Notice.NoticeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 @Slf4j
 @Service
@@ -36,7 +36,6 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeRepository.save(notice);
     }
 
-
     @Override
     public List<Notice> findAll() {
         return noticeRepository.findAll();
@@ -48,33 +47,18 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<NoticeDTO> findAllWithComments() {
-        return noticeCustomRepository.findAllWithComments();
+    public Map<String,List> findAllWithComments(int page) {
+        //admin get pagesize;
+        int pageSize=10;
+        return noticeCustomRepository.findAllWithComments(page,pageSize);
     }
 
     @Override
-    public Optional<Notice> findWithCommentsById(Long id) {
-            Optional<Notice> result= noticeCustomRepository.findWithCommentsById(id);
-            logger.info(result.get().getTitle());
-           return result;
+    public Optional<Notice> findWithCommentsById(int page,Long id) {
+        Optional<Notice> result= noticeCustomRepository.findWithCommentsById(page,id);
+        return result;
     }
-    /*
-@Transactional(readOnly = true)
-@Override
-public NoticeDTO findWithCommentsById(Long id) {
-  return noticeRepository.findWithCommentsById(id).map(notice -> {
-      // Notice 엔티티를 NoticeDTO로 변환
-      NoticeDTO noticeDTO = new NoticeDTO();
-      // 기타 필드들을 채워넣는 로직...
 
-      // comments 필드를 채워넣습니다.
-      noticeDTO.setComments(notice.getComments().stream()
-              .map(comment -> new CommentDTO(comment))
-              .collect(Collectors.toList()));
-      return noticeDTO;
-  }).orElseThrow(() -> new EntityNotFoundException("Notice not found with id: " + id));
-}
-*/
     @Override
     public Notice update(Long id,Notice saveNotice) {
         Optional<Notice> findNotice = noticeRepository.findById(id);

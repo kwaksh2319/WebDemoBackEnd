@@ -21,10 +21,9 @@ public class CommentController {
         this.commentService=commentService;
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Comment> save(@PathVariable Long id, @RequestBody Comment comment) {
-        log.info("Received POST request on /comment/{} with body: {}", id, comment);
-        return ResponseEntity.ok(commentService.save(id,comment));
+    @PostMapping("/{page}/{id}")
+    public ResponseEntity<Comment> save(@PathVariable int page, @PathVariable Long id, @RequestBody Comment comment) {
+        return ResponseEntity.ok(commentService.save(page,id,comment));
     }
 
     @GetMapping

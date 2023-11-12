@@ -5,6 +5,7 @@ import kr.co.kshproject.webDemo.Domain.Comment.CommentRepository;
 import kr.co.kshproject.webDemo.Domain.Notice.Notice;
 import kr.co.kshproject.webDemo.Domain.Notice.NoticeCustomRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Service
 @AllArgsConstructor
 public class CommentServiceImpl implements CommentService{
@@ -21,10 +22,13 @@ public class CommentServiceImpl implements CommentService{
     private final NoticeCustomRepository noticeCustomRepository;
 
     @Override
-    public Comment save(Long noticeId,Comment comment) {
+    public Comment save(int page, Long noticeId, Comment comment) {
         LocalDate now = LocalDate.now();
-        Optional<Notice> notice =noticeCustomRepository.findWithCommentsById(noticeId);
+        Optional<Notice> notice =noticeCustomRepository.findWithCommentsById(page,noticeId);
         Notice tmpNotice= notice.get();
+
+        //TODO
+        comment.setUserName("admin");// 유저변경할것
         comment.setNotice(tmpNotice);
         comment.setCreatedDate(now.toString());
         return commentRepository.save(comment);

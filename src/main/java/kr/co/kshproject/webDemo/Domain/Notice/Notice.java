@@ -46,5 +46,4 @@ public class Notice {
     @JsonManagedReference
     @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
-
 }

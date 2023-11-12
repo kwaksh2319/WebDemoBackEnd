@@ -9,8 +9,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 public class NoticeRepositoryImpl implements NoticeCustomRepository {
@@ -18,7 +18,10 @@ public class NoticeRepositoryImpl implements NoticeCustomRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<NoticeDTO> findAllWithComments() {
+    public Map<String,List> findAllWithComments(int page, int pageSize) {
+        List<Long> totalSize =new LinkedList<>();
+        Map<String,List> noticeDTOList=new ConcurrentHashMap<>();
+
         //Criteria API 사용
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         //NoticeDTO <= Notice 커멘트 사용하지 않기 위함
@@ -26,7 +29,7 @@ public class NoticeRepositoryImpl implements NoticeCustomRepository {
 
         //from 절
         Root<Notice> notice = cq.from(Notice.class);
-        //선택 및 조건 설정 =>select id,username,title,contents,email,createdDate from notice;
+        //SELECT id,username,title,contents,email,createdDate FROM Notice LIMIT [pageSize] OFFSET (page-1) * [pageSize] ;
         cq.select(cb.construct(
                 NoticeDTO.class,
                 notice.get("id"),
@@ -36,16 +39,39 @@ public class NoticeRepositoryImpl implements NoticeCustomRepository {
                 notice.get("email"),
                 notice.get("createdDate")
         ));
-
         //cq 쿼리 실행
         TypedQuery<NoticeDTO> query = entityManager.createQuery(cq);
+        //게시판 총사이즈
+        Long tSize=findAllCountNotice(cb);
+        tSize=tSize/pageSize+1;
+        totalSize.add(tSize);
+
+        //cq 쿼리 실행 후 페이지 갯수만큼 불러오기
+        query.setFirstResult( (page-1) *pageSize);
+        query.setMaxResults(pageSize);
+
+        //맵리스트 저장
+        noticeDTOList.put("lists",query.getResultList());
+        noticeDTOList.put("totalSize",totalSize);
+
         //결과값 리턴
-        return query.getResultList();
+        return noticeDTOList;
+    }
+
+    @Override
+    public Long findAllCountNotice(CriteriaBuilder cb) {
+        //게시판 총 카운트
+        CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        Root<Notice> countRoot = countQuery.from(Notice.class);
+        countQuery.select(cb.count(countRoot));
+        Long totalRecords = entityManager.createQuery(countQuery).getSingleResult();
+        return totalRecords;
     }
 
 
     @Override
-    public Optional<Notice> findWithCommentsById(Long id)  {
+    public Optional<Notice> findWithCommentsById(int page,Long id)  {
+
         //Criteria API 사용
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         //Notice 사용 이유는 댓글들을 불러오기때문
