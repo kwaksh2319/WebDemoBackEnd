@@ -72,6 +72,12 @@ public class NoticeServiceImpl implements NoticeService {
         notice.setContents(saveNotice.getContents());
         return noticeRepository.save(notice);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        noticeRepository.deleteById(id);
+    }
+
     @Override
     public void deleteAll() {
         noticeRepository.deleteAll();

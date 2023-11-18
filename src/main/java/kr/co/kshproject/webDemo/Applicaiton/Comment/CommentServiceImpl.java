@@ -52,8 +52,12 @@ public class CommentServiceImpl implements CommentService{
         }
         Comment comment=findComment.get();
         comment.setContents(saveComment.getContents());
-
         return commentRepository.save(comment);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        commentRepository.deleteById(id);
     }
 
     @Override

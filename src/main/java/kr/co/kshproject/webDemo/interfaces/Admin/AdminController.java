@@ -2,20 +2,22 @@ package kr.co.kshproject.webDemo.interfaces.Admin;
 
 import kr.co.kshproject.webDemo.Applicaiton.Admin.AdminService;
 import kr.co.kshproject.webDemo.Applicaiton.Notice.NoticeServiceImpl;
-
 import kr.co.kshproject.webDemo.Applicaiton.ProductService;
+import kr.co.kshproject.webDemo.Domain.Notice.Notice;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
-@Controller
+@RestController
+@RequestMapping("/admin")
 public class AdminController {
     @Autowired
     private AdminService adminService;
@@ -26,7 +28,7 @@ public class AdminController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/Admin")
+    @GetMapping("/")
     public String getAdmin(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
@@ -35,7 +37,7 @@ public class AdminController {
         }
         return "forward:/index.html";
     }
-    @GetMapping("/Admin/Product")
+    @GetMapping("/product")
     public String getAdminProductList(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
@@ -44,7 +46,7 @@ public class AdminController {
         }
         return "forward:/index.html";
     }
-    @GetMapping("/Admin/Post")
+    @GetMapping("/notice")
     public String getAdminNoticeList(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
@@ -54,18 +56,43 @@ public class AdminController {
         return "forward:/index.html";
     }
 
-    @DeleteMapping("/Admin/Notice/Delete/{id}")
+    @GetMapping("/notice/{page}")
+    public ResponseEntity<Map<String, List>>getAdminFindAllWithComments(@PathVariable int page){
+       /*
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
+            return ResponseEntity.badRequest().build();
+        }*/
+
+        return ResponseEntity.ok( noticeService.findAllWithComments(page));
+    }
+
+    @DeleteMapping("/notice/{id}")
     public String deleteAdminNoticeDetail(@PathVariable Long id,HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
+        noticeService.deleteById(id);
         //noticeService.deleteNoticeDetail(id);
         return "redirect:/Admin/Post";
     }
+    @GetMapping("/notice/{page}/{id}")
+    public ResponseEntity<Notice> findWithCommentsById(@PathVariable int page, @PathVariable Long id,HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
+            return ResponseEntity.badRequest().build();
+        }
 
-    @DeleteMapping("/Admin/Product/Delete/{id}")
+        Optional<Notice> notice=noticeService.findWithCommentsById(page,id);
+
+        return ResponseEntity.ok( notice.get() );
+    }
+
+    @DeleteMapping("/product/{id}")
     public String deleteAdminProductDetail(@PathVariable Long id,HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {

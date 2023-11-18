@@ -48,7 +48,12 @@ public class NoticeController {
        return ResponseEntity.ok(noticeService.update(id,notice));
    }
 
-   @DeleteMapping
+   @DeleteMapping("/{id}")
+   public void deleteById(@PathVariable Long id){
+        noticeService.deleteById(id);
+    }
+
+    @DeleteMapping
    public void deleteAll(){
         noticeService.deleteAll();
    }

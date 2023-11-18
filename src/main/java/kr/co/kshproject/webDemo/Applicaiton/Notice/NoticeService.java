@@ -13,5 +13,7 @@ public interface NoticeService {
     Map<String,List> findAllWithComments(int page);
     Optional<Notice> findWithCommentsById(int page,Long id);
     Notice update(Long id,Notice notice);
+
+    void deleteById(Long id);
     void deleteAll();
 }
