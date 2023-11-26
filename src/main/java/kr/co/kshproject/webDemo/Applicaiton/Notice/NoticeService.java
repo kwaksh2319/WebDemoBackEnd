@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface NoticeService {
     Notice save(Notice notice);
     List<Notice> findAll();
+
     Optional<Notice> findById(Long id);
     Map<String,List> findAllWithComments(int page);
     Optional<Notice> findWithCommentsById(int page,Long id);

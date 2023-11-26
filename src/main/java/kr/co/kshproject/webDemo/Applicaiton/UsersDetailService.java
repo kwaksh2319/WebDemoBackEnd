@@ -1,22 +1,10 @@
 package kr.co.kshproject.webDemo.Applicaiton;
 
-import kr.co.kshproject.webDemo.Domain.Users;
-import kr.co.kshproject.webDemo.Domain.UsersDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 @Service
-public class UsersDetailService implements UserDetailsService {
-
+public class UsersDetailService  {//implements UserDetailsService
+/*
     @Autowired
     private  UsersDao usersDao;
     public UsersDetailService(){
@@ -60,5 +48,5 @@ public class UsersDetailService implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority(role));
         }
         return authorities;
-    }
+    }*/
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CommentService {
-    Comment save(int page,Long noticeId,Comment comment);
+    Comment save(int page,Long noticeId,Long userId,Comment comment);
     List<Comment> findAll();
     Optional<Comment> findById(Long id);
     Comment update(Long id,Comment saveComment);

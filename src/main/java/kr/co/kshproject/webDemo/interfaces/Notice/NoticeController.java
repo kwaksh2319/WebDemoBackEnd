@@ -32,7 +32,7 @@ public class NoticeController {
         return ResponseEntity.ok( noticeService.findAllWithComments(1));
     }
 
-   @GetMapping("/{page}")
+    @GetMapping("/{page}")
     public ResponseEntity< Map<String,List> > findAll(@PathVariable int page){
         return ResponseEntity.ok( noticeService.findAllWithComments(page));
    }
@@ -54,7 +54,7 @@ public class NoticeController {
     }
 
     @DeleteMapping
-   public void deleteAll(){
+    public void deleteAll(){
         noticeService.deleteAll();
    }
 }

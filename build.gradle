@@ -23,7 +23,7 @@ dependencies {
     implementation 'org.webjars:bootstrap:5.0.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'com.h2database:h2'
+    implementation 'com.h2database:h2:1.4.200'
     implementation 'org.hibernate:hibernate-core'
     implementation 'org.hibernate:hibernate-entitymanager'
     implementation 'com.zaxxer:HikariCP:4.0.3'
@@ -33,13 +33,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework:spring-messaging'
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 
-    // implementation 'org.springframework.security:spring-security-config:5.3.10'
-    // implementation 'org.springframework.security:spring-security-web:5.3.10'
+//    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+//    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.apache.commons:commons-text:1.9'
-    implementation 'junit:junit:4.13.1'
+
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -47,10 +49,9 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:4.8.0' // 최신 버전에 따라 번호를 확인하십시오
 
     //testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
-    testCompileOnly 'junit:junit:4.12'
-    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.1.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.8.2'
     implementation('org.slf4j:jcl-over-slf4j')
     implementation('ch.qos.logback:logback-classic')
 

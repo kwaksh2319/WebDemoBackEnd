@@ -2,7 +2,6 @@ package kr.co.kshproject.webDemo.interfaces.Admin;
 
 import kr.co.kshproject.webDemo.Applicaiton.Admin.AdminService;
 import kr.co.kshproject.webDemo.Applicaiton.Notice.NoticeServiceImpl;
-import kr.co.kshproject.webDemo.Applicaiton.ProductService;
 import kr.co.kshproject.webDemo.Domain.Notice.Notice;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,6 @@ public class AdminController {
     @Autowired
     private NoticeServiceImpl noticeService;
 
-    @Autowired
-    private ProductService productService;
 
     @GetMapping("/")
     public String getAdmin(HttpServletRequest request){
@@ -99,7 +96,6 @@ public class AdminController {
             // 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트
             return "redirect:/fail";
         }
-        productService.deleteProductDetail(id);
         return "redirect:/index.html";
     }
 

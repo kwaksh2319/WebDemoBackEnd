@@ -1,56 +1,58 @@
 package kr.co.kshproject.webDemo.interfaces.Users;
 
+import io.swagger.v3.oas.annotations.Operation;
+import kr.co.kshproject.webDemo.Applicaiton.User.UserService;
+import kr.co.kshproject.webDemo.Domain.Users.Users;
+import kr.co.kshproject.webDemo.Domain.Users.UsersDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @Slf4j
 @RestController
+@RequestMapping("/user")
 public class UsersController {
+    private final UserService usersService;
 
-/*
+
     @Autowired
-    private UsersServices usersServices; //서비스
-
-    //user 여러개 조회  ( 관리자 계정: 유저리스트 조회 )
-    @GetMapping("/users")
-    public List<Users> getAllUsers(){
-        return usersServices.getAllUsers();
+    public UsersController(UserService usersService){
+        this.usersService=usersService;
     }
 
-    //user 한개 조회  ( 관리자 계정: 유저리스트 조회 )
-    @GetMapping("/users/{id}")
-    public Users getUsers(@PathVariable("id") String id){
-        Users users=usersServices.getUsers(id);
-        return users;
-    }
-    //유저 접속
-//
-    @PostMapping("/signIn")
-    public ResponseEntity<?> SignIn(@Valid @RequestBody Users resource) throws URISyntaxException {
-        Users users = usersServices.loginUsers(
-                Users.builder()
-                        .id(resource.getId())
-                        .password(resource.getPassword())
-                        .build());
-
-        URI location = new URI("/main");
-        return ResponseEntity.created(location).body("{}");
+    @Operation(summary = "Get all items", description = "Retrieve a list of items")
+    @PostMapping
+    public ResponseEntity<Users> save(@RequestBody Users user){
+        return ResponseEntity.ok(usersService.save(user));
     }
 
-        //user 접속        ( 로그인 )
-        @PostMapping("/SignIn")
-        public ResponseEntity<?> logins(@Valid @RequestBody Users resource) throws URISyntaxException {
-            //return usersServices.loginUsers(resource);
-            /*
-            Users users = usersServices.loginUsers(
-                    Users.builder()
-                            .id(resource.getId())
-                            .password(resource.getPassword())
-                            .build());
+    @GetMapping
+    public ResponseEntity<List<Users>> findAll(){
+        return ResponseEntity.ok( usersService.findAll() );
+    }
 
-        URI location = new URI("/SignUp");
-        return ResponseEntity.created(location).body("{}");
-    } */
-    //user 등록       ( 회원가입 )
-//등록
+    @GetMapping("/{page}/{size}")
+    public ResponseEntity<Page<Users>> findAll(@PathVariable int page, @PathVariable int size){
+        return ResponseEntity.ok( usersService.findAll(page,size) );
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Users> update(@PathVariable Long id, @RequestBody UsersDTO usersDTO){
+        return ResponseEntity.ok(usersService.update(id,usersDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id){
+        usersService.deleteById(id);
+    }
+
+    @DeleteMapping
+    public void deleteAll(){
+        usersService.deleteAll();
+    }
 
 }

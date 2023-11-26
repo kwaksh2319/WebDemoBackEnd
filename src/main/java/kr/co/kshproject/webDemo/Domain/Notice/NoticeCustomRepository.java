@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface NoticeCustomRepository {
     public Map<String, List> findAllWithComments(int page, int pageSize);
 
-     Long findAllCountNotice(CriteriaBuilder cb);
+    Long findAllCountNotice(CriteriaBuilder cb);
     Optional<Notice> findWithCommentsById(int page,Long id) ;
 }

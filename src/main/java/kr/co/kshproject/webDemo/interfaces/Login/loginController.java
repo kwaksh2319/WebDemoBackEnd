@@ -2,20 +2,14 @@ package kr.co.kshproject.webDemo.interfaces.Login;
 
 import kr.co.kshproject.webDemo.Applicaiton.IpAddress.IpAddressService;
 import kr.co.kshproject.webDemo.Applicaiton.UsersDetailService;
-import kr.co.kshproject.webDemo.Domain.Users;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -43,9 +37,9 @@ public class loginController {
         }
         return ResponseEntity.badRequest().build(); // 로그아웃 후 리다이렉트할 경로
     }
-
+   /*
     @PostMapping("/loginProxy")
-    public ResponseEntity<?> loginUser(@RequestBody Users usersData, HttpSession session,HttpServletRequest request){
+    public ResponseEntity<?> loginUser(@RequestBody Users usersData, HttpSession session, HttpServletRequest request){
         String hashedPassword=passwordEncoder.encode(usersData.getPassword());
         String ipAddress = request.getRemoteAddr();
         UserDetails userDetails = usersDetailService.loadUserByUsername(usersData.getUsername());
@@ -64,7 +58,7 @@ public class loginController {
         }else{
             return ResponseEntity.badRequest().build();
         }
-    }
+    }*/
 
     @GetMapping("/Main")
     public String loginUser(HttpServletRequest request){

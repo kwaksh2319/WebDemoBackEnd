@@ -4,6 +4,8 @@ import kr.co.kshproject.webDemo.Domain.Comment.Comment;
 import kr.co.kshproject.webDemo.Domain.Comment.CommentRepository;
 import kr.co.kshproject.webDemo.Domain.Notice.Notice;
 import kr.co.kshproject.webDemo.Domain.Notice.NoticeCustomRepository;
+import kr.co.kshproject.webDemo.Domain.Users.Users;
+import kr.co.kshproject.webDemo.Domain.Users.UsersRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -21,14 +23,17 @@ public class CommentServiceImpl implements CommentService{
     private final CommentRepository commentRepository;
     private final NoticeCustomRepository noticeCustomRepository;
 
+    private final UsersRepository  usersRepository;
+
     @Override
-    public Comment save(int page, Long noticeId, Comment comment) {
+    public Comment save(int page, Long noticeId, Long userId, Comment comment) {
         LocalDate now = LocalDate.now();
         Optional<Notice> notice =noticeCustomRepository.findWithCommentsById(page,noticeId);
         Notice tmpNotice= notice.get();
 
-        //TODO
-        comment.setUserName("admin");// 유저변경할것
+        Optional<Users> user =usersRepository.findById(userId);
+
+        comment.setUserName(user.get().getName());// 유저변경할것
         comment.setNotice(tmpNotice);
         comment.setCreatedDate(now.toString());
         return commentRepository.save(comment);
