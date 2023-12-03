@@ -1,16 +1,33 @@
 package kr.co.kshproject.webDemo.Common;
 
-/*
+import io.swagger.v3.oas.models.servers.Server;
+import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.customizers.OpenApiCustomiser;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+
 @Configuration
-@EnableSwagger2*/
 public class SwaggerConfig {
-    /*
+
     @Bean
-    public Docket apiDocket() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("kr.co.kshproject.webDemo")) // 여기에는 당신의 패키지 이름을 입력하세요
-                .paths(PathSelectors.any())
+    public GroupedOpenApi commonApi() {
+        return GroupedOpenApi.builder()
+                .group("api")
+                .addOpenApiCustomiser(serverCustomizer())
+                .packagesToScan("kr.co.kshproject.webDemo")
+                .pathsToMatch("/**")
                 .build();
-    }*/
+    }
+
+    @Bean
+    public OpenApiCustomiser serverCustomizer() {
+
+        return openApi -> {
+
+            openApi.addServersItem(new Server().url("https://ddubi.site/").description("for testing"));
+            openApi.addServersItem(new Server().url("http://localhost:8080").description("for local usages"));
+        };
+    }
+
 }

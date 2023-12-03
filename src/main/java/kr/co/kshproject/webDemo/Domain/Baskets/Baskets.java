@@ -44,16 +44,26 @@ public class Baskets {
     @Column(name = "update_date")
     private String updateDate;
 
-    @JsonBackReference
+    @JsonBackReference(value="users-baskets")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @Setter
     private Users users;
 
-    @JsonBackReference
+    @JsonBackReference(value="products-baskets")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="product_id")
     @Setter
     private Products products;
+
+    public Baskets(BasketsDTO basketsDTO){
+        this.productName= basketsDTO.getProductName();
+        this.productStatus= basketsDTO.getProductStatus();
+        this.quantity= basketsDTO.getQuantity();
+        this.createDate= basketsDTO.getCreateDate();
+        this.updateDate= basketsDTO.getUpdateDate();
+        this.users=basketsDTO.getUsers();
+        this.products=basketsDTO.getProducts();
+    }
 
 }

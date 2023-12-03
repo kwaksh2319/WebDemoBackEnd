@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,8 +25,11 @@ public class OrdersServiceImpl implements OrdersService {
         this.ordersRepository=ordersRepository;
     }
 
+    @Transactional
     @Override
-    public Orders save(Orders order) {
+    public Orders save(OrdersDTO ordersDTO) {
+        Orders order=new Orders(ordersDTO);
+
         return ordersRepository.save(order);
     }
 
@@ -45,16 +49,22 @@ public class OrdersServiceImpl implements OrdersService {
         return ordersRepository.findById(id);
     }
 
+
+    @Transactional
     @Override
     public Orders update(Long id, OrdersDTO ordersDTO) {
         return ordersRepository.save(ConverEntity(id,ordersDTO));
     }
 
+
+    @Transactional
     @Override
     public void deleteById(Long id) {
         ordersRepository.deleteById(id);
     }
 
+
+    @Transactional
     @Override
     public void deleteAll() {
         ordersRepository.deleteAll();

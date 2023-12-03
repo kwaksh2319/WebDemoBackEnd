@@ -24,7 +24,8 @@ public class BeginOrderServiceImpl implements BeginOrderService{
     }
 
     @Override
-    public BeginOrder save(BeginOrder beginOrder) {
+    public BeginOrder save(BeginOrderDTO beginOrderDTO) {
+        BeginOrder beginOrder=new BeginOrder(beginOrderDTO);
         return beginOrderRepository.save(beginOrder);
     }
 

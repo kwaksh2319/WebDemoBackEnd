@@ -50,14 +50,24 @@ public class Orders {
     @Column(name = "update_date")
     private String updateDate;
 
-    @JsonBackReference
+    @JsonBackReference(value="users-orders")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @Setter
     private Users users;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="orders-beginOrders")
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BeginOrder> beginOrders = new ArrayList<>();
+
+    public Orders(OrdersDTO ordersDTO){
+        this.payment=ordersDTO.getPayment();
+        this.status= ordersDTO.getStatus();
+        this.price= ordersDTO.getPrice();
+        this.cancel=ordersDTO.getCancel();
+        this.createdDate= ordersDTO.getCreatedDate();
+        this.updateDate= ordersDTO.getUpdateDate();
+        this.users=ordersDTO.getUsers();
+    }
 
 }

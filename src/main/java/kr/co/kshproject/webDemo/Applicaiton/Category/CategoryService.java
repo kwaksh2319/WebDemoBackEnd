@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoryService {
-    Category save(Category category);
+    Category save(CategoryDTO categoryDTO);
     List<Category> findAll();
     Page<Category> findAll(int page, int size);
     Optional<Category> findById(Long id);

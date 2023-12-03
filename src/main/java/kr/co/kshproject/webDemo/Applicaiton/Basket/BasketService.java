@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BasketService {
-    Baskets save(Baskets baskets);
+    Baskets save(BasketsDTO basketsDTO);
     List<Baskets> findAll();
     Page<Baskets> findAll(int page, int size);
     Optional<Baskets> findById(Long id);

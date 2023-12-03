@@ -24,7 +24,8 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Category save(Category category) {
+    public Category save(CategoryDTO categoryDTO) {
+        Category category=new Category(categoryDTO);
         return categoryRepository.save(category);
     }
 
@@ -62,7 +63,8 @@ public class CategoryServiceImpl implements CategoryService{
     private Category ConverEntity(Long id, CategoryDTO categoryDTO){
         Optional<Category> category=categoryRepository.findById(id);
         category.get().setCategoryName(categoryDTO.getCategoryName());
-        category.get().setParentCategory(categoryDTO.getParentCategory());
+
+       // category.get().setParentCategory(categoryDTO.getParentCategory());
         category.get().setCreatedDate(categoryDTO.getCreatedDate());
         category.get().setUpdateDate(categoryDTO.getUpdateDate());
 

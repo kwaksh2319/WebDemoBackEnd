@@ -7,8 +7,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Category")
@@ -39,15 +39,22 @@ public class Category {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="category_id")
+    @JoinColumn(name="category_id", nullable = true)
     @Setter
     private Category parentCategory;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Products> products = new ArrayList<>();
+    private Set<Products> products = new HashSet<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Category> parentCategories = new ArrayList<>();
+    private Set<Category> childCategories = new HashSet<>();
+
+    public Category(CategoryDTO categoryDTO){
+        this.categoryName=categoryDTO.getCategoryName();
+        this.createdDate=categoryDTO.getCreatedDate();
+        this.updateDate=categoryDTO.getUpdateDate();
+        this.parentCategory=categoryDTO.getParentCategory();
+    }
 }

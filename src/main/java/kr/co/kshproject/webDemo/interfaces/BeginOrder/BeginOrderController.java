@@ -22,8 +22,8 @@ public class BeginOrderController {
     }
 
     @PostMapping
-    public ResponseEntity<BeginOrder> save(@RequestBody BeginOrder beginOrder){
-        return ResponseEntity.ok(beginOrderService.save(beginOrder));
+    public ResponseEntity<BeginOrder> save(@RequestBody BeginOrderDTO beginOrderDTO){
+        return ResponseEntity.ok(beginOrderService.save(beginOrderDTO));
     }
 
     @GetMapping

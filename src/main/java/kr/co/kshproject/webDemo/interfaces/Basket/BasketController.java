@@ -23,8 +23,8 @@ public class BasketController {
     }
 
     @PostMapping
-    public ResponseEntity<Baskets> save(@RequestBody Baskets basket){
-        return ResponseEntity.ok(basketService.save(basket));
+    public ResponseEntity<Baskets> save(BasketsDTO basketsDTO){
+        return ResponseEntity.ok(basketService.save(basketsDTO));
     }
 
     @GetMapping
@@ -38,7 +38,7 @@ public class BasketController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Baskets> update(@PathVariable Long id, @RequestBody BasketsDTO basketsDTO){
+    public ResponseEntity<Baskets> update(@PathVariable Long id, @RequestBody BasketsDTO basketsDTO ){
         return ResponseEntity.ok(basketService.update(id,basketsDTO));
     }
 

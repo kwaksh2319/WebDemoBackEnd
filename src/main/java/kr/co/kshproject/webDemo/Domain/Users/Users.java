@@ -10,8 +10,8 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -48,19 +48,27 @@ public class Users {
     @Setter
     private String password;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="users-comments")
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Comment> comments = new ArrayList<>();
+    private Set<Comment> comments = new HashSet<>();
 
-    @JsonManagedReference
+    @JsonManagedReference(value="users-notices")
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Notice> notices = new ArrayList<>();
+    private Set<Notice> notices = new HashSet<>();
 
-    @JsonManagedReference
+    @JsonManagedReference(value="users-baskets")
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Baskets> baskets = new ArrayList<>();
+    private Set<Baskets> baskets = new HashSet<>();
 
-    @JsonManagedReference
+    @JsonManagedReference(value="users-orders")
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Orders> orders = new ArrayList<>();
+    private Set<Orders> orders = new HashSet<>();
+
+    public Users(UsersDTO usersDTO){
+        this.username=usersDTO.getUsername();
+        this.name=usersDTO.getName();
+        this.level= usersDTO.getLevel();
+        this.password=usersDTO.getPassword();
+        this.email=usersDTO.getEmail();
+    }
 }

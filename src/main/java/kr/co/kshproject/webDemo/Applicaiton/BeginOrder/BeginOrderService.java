@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BeginOrderService {
-    BeginOrder save(BeginOrder beginOrder);
+    BeginOrder save(BeginOrderDTO beginOrderDTO) ;
     List<BeginOrder> findAll();
     Page<BeginOrder> findAll(int page, int size);
     Optional<BeginOrder> findById(Long id);

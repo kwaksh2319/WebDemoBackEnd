@@ -24,7 +24,8 @@ public class BasketServiceImpl implements BasketService{
     }
 
     @Override
-    public Baskets save(Baskets baskets) {
+    public Baskets save(BasketsDTO basketsDTO) {
+        Baskets baskets=new Baskets(basketsDTO);
         return basketsRepository.save(baskets);
     }
 

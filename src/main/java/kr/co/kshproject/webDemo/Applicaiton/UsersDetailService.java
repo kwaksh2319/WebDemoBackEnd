@@ -1,23 +1,35 @@
 package kr.co.kshproject.webDemo.Applicaiton;
 
+import kr.co.kshproject.webDemo.Domain.Users.Users;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 @Service
-public class UsersDetailService  {//implements UserDetailsService
-/*
-    @Autowired
-    private  UsersDao usersDao;
+public class UsersDetailService implements UserDetailsService {
+
+    //@Autowired
+    //private  UsersDao usersDao;
     public UsersDetailService(){
 
     }
-    public UsersDetailService(UsersDao usersDao){
-        this.usersDao=usersDao;
-    }
+   // public UsersDetailService(UsersDao usersDao){
+      //  this.usersDao=usersDao;
+   // }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //유저 데이터 가져오기
-        Users user = usersDao.findByUsername(username);
+        //Users user = usersDao.findByUsername(username);
+
+        Users user = new Users();
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         } //user.getLevel()
@@ -32,7 +44,7 @@ public class UsersDetailService  {//implements UserDetailsService
         }
 
         List<String> roles=new LinkedList<>();
-        roles.add(role);
+        roles.add("ROLE_ADMIN");
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
@@ -48,5 +60,5 @@ public class UsersDetailService  {//implements UserDetailsService
             authorities.add(new SimpleGrantedAuthority(role));
         }
         return authorities;
-    }*/
+    }
 }

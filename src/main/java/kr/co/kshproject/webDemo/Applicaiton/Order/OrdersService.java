@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrdersService {
-    Orders save(Orders order);
+    Orders save(OrdersDTO ordersDTO);
     List<Orders> findAll();
     Page<Orders> findAll(int page, int size);
     Optional<Orders> findById(Long id);

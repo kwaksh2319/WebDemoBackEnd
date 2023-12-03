@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentDTO {
+
     private Long id;
     private Long noticeId; // 대신 Notice 엔티티의 ID를 저장
     private String userName;

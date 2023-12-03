@@ -6,11 +6,12 @@ import kr.co.kshproject.webDemo.Domain.Products.Products;
 import kr.co.kshproject.webDemo.Domain.Products.ProductsDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -24,20 +25,23 @@ public class ProductsController {
     }
 
     @PostMapping
-    public ResponseEntity<Products> save(@RequestBody Products product){
-        return ResponseEntity.ok(productService.save(product));
+    public ResponseEntity<Products> save(@RequestBody ProductsDTO productsDTO){
+        return ResponseEntity.ok(productService.save(productsDTO));
     }
 
     @GetMapping
-    public ResponseEntity<List<Products>> findAll(){
+    public ResponseEntity<List<ProductsDTO>> findAll(){
         return ResponseEntity.ok( productService.findAll() );
     }
 
     @GetMapping("/{page}/{size}")
-    public ResponseEntity<Page<Products>> findAll(@PathVariable int page, @PathVariable int size){
+    public ResponseEntity<Map<String,List>> findAll(@PathVariable int page, @PathVariable int size){
         return ResponseEntity.ok( productService.findAll(page,size) );
     }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Products>> findById(@PathVariable Long id){
+        return ResponseEntity.ok(productService.findById(id));
+    }
     @PutMapping("/{id}")
     public ResponseEntity<Products> update(@PathVariable Long id, @RequestBody ProductsDTO productsDTO){
         return ResponseEntity.ok(productService.update(id,productsDTO));

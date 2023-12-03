@@ -1,16 +1,15 @@
 package kr.co.kshproject.webDemo.Applicaiton.User;
 
 import kr.co.kshproject.webDemo.Domain.Users.Users;
+import kr.co.kshproject.webDemo.Domain.Users.UsersCustomRepository;
 import kr.co.kshproject.webDemo.Domain.Users.UsersDTO;
 import kr.co.kshproject.webDemo.Domain.Users.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -18,37 +17,42 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
 
     private final UsersRepository usersRepository;
+    private final UsersCustomRepository usersCustomRepository;
 
     @Autowired
-    public UserServiceImpl(UsersRepository usersRepository){
+    public UserServiceImpl(UsersRepository usersRepository, UsersCustomRepository usersCustomRepository){
         this.usersRepository=usersRepository;
+        this.usersCustomRepository=usersCustomRepository;
     }
 
     @Override
-    public Users save(Users user) {
+    public Users save(UsersDTO usersDTO) {
+        Users user= new Users(usersDTO);
         return usersRepository.save(user);
     }
 
     @Override
-    public List<Users> findAll() {
-        return usersRepository.findAll();
+    public List<UsersDTO> findAll() {
+       return usersCustomRepository.findAll();
     }
 
     @Override
-    public Page<Users> findAll(int page,int size) {
-        Pageable pageable= PageRequest.of(page,size);
-        return usersRepository.findAll(pageable);
+    public Map<String,List> findAll(int page, int size) {
+        return usersCustomRepository.findAll(page,size);
     }
 
     @Override
     public Optional<Users> findById(Long id) {
-        return usersRepository.findById(id);
+        return usersCustomRepository.findById(id);
     }
 
     @Override
     public Users update(Long id,UsersDTO usersDTO) {
-        Optional<Users> user=usersRepository.findById(id);
-        return usersRepository.save(ConverEntity(id,usersDTO));
+        Users updateUser=converEntity(id,usersDTO);
+        if(updateUser==null){
+            return null;
+        }
+        return usersRepository.save(updateUser);
     }
 
     @Override
@@ -61,13 +65,17 @@ public class UserServiceImpl implements UserService{
         usersRepository.deleteAll();
     }
 
-    private Users ConverEntity(Long id,UsersDTO usersDTO){
-        Optional<Users> user=usersRepository.findById(id);
+    private Users converEntity(Long id,UsersDTO usersDTO){
+        Optional<Users> user=usersCustomRepository.findById(id);
+        if(user.isPresent()==false){
+            return null;
+        }
         user.get().setName(usersDTO.getName());
         user.get().setEmail(usersDTO.getEmail());
         user.get().setLevel(usersDTO.getLevel());
         user.get().setUsername(usersDTO.getUsername());
         user.get().setPassword(usersDTO.getPassword());
+
         return user.get();
     }
 }

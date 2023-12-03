@@ -34,7 +34,7 @@ dependencies {
     implementation 'org.springframework:spring-messaging'
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
-
+  //  implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 //    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 //    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
