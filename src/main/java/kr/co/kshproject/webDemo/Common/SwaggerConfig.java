@@ -25,7 +25,7 @@ public class SwaggerConfig {
 
         return openApi -> {
 
-            openApi.addServersItem(new Server().url("https://ddubi.site/").description("for testing"));
+            openApi.addServersItem(new Server().url("https://ddubi.site").description("for testing"));
             openApi.addServersItem(new Server().url("http://localhost:8080").description("for local usages"));
         };
     }

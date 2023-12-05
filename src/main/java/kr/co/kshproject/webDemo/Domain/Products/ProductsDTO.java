@@ -28,7 +28,7 @@ public class ProductsDTO {
     @Schema(example  = "업데이트날짜")
     private String updateDate;
     @Schema(example  = "null")
-    private Long category_id;
+    private Long categoryId;
 
     public ProductsDTO(Products products){
         this.id=products.getId();
@@ -39,7 +39,7 @@ public class ProductsDTO {
         this.createdDate=products.getCreatedDate();
         this.updateDate=products.getUpdateDate();
         if(products.getCategory()!=null){
-            this.category_id=products.getCategory().getId();
+            this.categoryId=products.getCategory().getId();
         }
         this.price=products.getPrice();
     }

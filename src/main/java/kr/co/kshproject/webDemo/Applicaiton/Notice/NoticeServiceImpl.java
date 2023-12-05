@@ -1,76 +1,60 @@
 package kr.co.kshproject.webDemo.Applicaiton.Notice;
 
+import kr.co.kshproject.webDemo.Applicaiton.User.UserService;
 import kr.co.kshproject.webDemo.Domain.Notice.Notice;
 import kr.co.kshproject.webDemo.Domain.Notice.NoticeCustomRepository;
+import kr.co.kshproject.webDemo.Domain.Notice.NoticeDTO;
 import kr.co.kshproject.webDemo.Domain.Notice.NoticeRepository;
+import kr.co.kshproject.webDemo.Domain.Users.Users;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 @Slf4j
 @Service
 public class NoticeServiceImpl implements NoticeService {
-    private static final Logger logger = LoggerFactory.getLogger(NoticeServiceImpl.class);
-
     private final NoticeRepository noticeRepository;
 
     private final NoticeCustomRepository noticeCustomRepository;
 
+    private final UserService userService;
+
     @Autowired
-    public NoticeServiceImpl(NoticeRepository noticeRepository,NoticeCustomRepository noticeCustomRepository){
+    public NoticeServiceImpl(NoticeRepository noticeRepository,
+                             NoticeCustomRepository noticeCustomRepository,
+                             UserService userService){
         this.noticeRepository=noticeRepository;
         this.noticeCustomRepository=noticeCustomRepository;
+        this.userService=userService;
     }
 
     @Override
-    public Notice save(Notice notice) {
-        LocalDate now = LocalDate.now();
-        notice.setCreatedDate(now.toString());
-        notice.setUsername("admin");
+    public Notice save(NoticeDTO noticeDTO) {
+        Notice notice=new Notice(noticeDTO);
         return noticeRepository.save(notice);
     }
 
     @Override
-    public List<Notice> findAll() {
-        return noticeRepository.findAll();
+    public List<NoticeDTO> findAll() {
+        return noticeCustomRepository.findAll();
+    }
+
+    @Override
+    public Map<String,List> findAll(int page, int size) {
+        return noticeCustomRepository.findAll(page,size);
     }
 
     @Override
     public Optional<Notice> findById(Long id) {
-        return noticeRepository.findById(id);
+        return noticeCustomRepository.findById(id);
     }
 
     @Override
-    public Map<String,List> findAllWithComments(int page) {
-        //admin get pagesize;
-        int pageSize=10;
-        return noticeCustomRepository.findAllWithComments(page,pageSize);
-    }
-
-    @Override
-    public Optional<Notice> findWithCommentsById(int page,Long id) {
-        Optional<Notice> result= noticeCustomRepository.findWithCommentsById(page,id);
-        return result;
-    }
-
-    @Override
-    public Notice update(Long id,Notice saveNotice) {
-        Optional<Notice> findNotice = noticeRepository.findById(id);
-
-        if(findNotice.isPresent()==false){
-            return null;
-        }
-
-        Notice notice=findNotice.get();
-        notice.setTitle(saveNotice.getTitle());
-        notice.setContents(saveNotice.getContents());
-        return noticeRepository.save(notice);
+    public Notice update(Long id,NoticeDTO noticeDTO) {
+        return noticeRepository.save(ConverEntity(id,noticeDTO));
     }
 
     @Override
@@ -81,5 +65,23 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public void deleteAll() {
         noticeRepository.deleteAll();
+    }
+
+    private Notice ConverEntity(Long id, NoticeDTO noticeDTO){
+
+        Optional<Notice> notice=noticeCustomRepository.findById(id);
+        Long userId=noticeDTO.getUserId();
+        Optional<Users> updateUsers =userService.findById(userId);
+        notice.get().setUsername(noticeDTO.getUsername());
+        notice.get().setTitle(noticeDTO.getTitle());
+        notice.get().setContents(noticeDTO.getContents());
+        notice.get().setEmail(noticeDTO.getEmail());
+        notice.get().setCreatedDate(noticeDTO.getCreatedDate());
+
+        if(updateUsers.isPresent()==true){
+            notice.get().setUsers( updateUsers.get());
+        }
+
+        return notice.get();
     }
 }

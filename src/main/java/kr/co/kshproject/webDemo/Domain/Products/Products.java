@@ -60,7 +60,7 @@ public class Products {
     private String updateDate;
 
 
-    @JsonBackReference
+    @JsonBackReference(value="category-products")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="category_id", nullable = true)
     @Setter

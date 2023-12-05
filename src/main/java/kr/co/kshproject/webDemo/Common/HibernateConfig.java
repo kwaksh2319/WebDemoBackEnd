@@ -69,9 +69,9 @@ public class HibernateConfig {
         properties.setProperty("hibernate.dialect", env.getProperty("spring.jpa.hibernate.dialect"));
         properties.setProperty("hibernate.show_sql", env.getProperty("spring.jpa.show-sql"));
         properties.setProperty("hibernate.ddl-auto",env.getProperty("spring.jpa.hibernate.ddl-auto"));
-        properties.setProperty("hibernate.generate_statistics", "false"); // Hibernate의 통계 정보를 로깅에 출력
+        properties.setProperty("hibernate.generate_statistics", "false"); // Hibernate의 통계 정보를 로깅에 출력ddl-auto
         // 스키마 생성 스크립트 설정
-      //  properties.setProperty("javax.persistence.schema-generation.scripts.action", "create");
+        //properties.setProperty("javax.persistence.schema-generation.scripts.action", "create");
        // properties.setProperty("javax.persistence.schema-generation.scripts.create-target", "create.sql");
 
         return properties;

@@ -1,7 +1,6 @@
 package kr.co.kshproject.webDemo.Domain.Notice;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import kr.co.kshproject.webDemo.Domain.Users.Users;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +23,9 @@ public class NoticeDTO {
     private String email;
     @Schema(example  = "생성날짜")
     private String createdDate;
-    @Schema(example = "{'id': 1, 'username': '사용자 아이디', 'email': '이메일', 'name': '사용자 이름', 'level': '2', 'password': 'passwords', 'comments': 'null', 'notices': 'null', 'baskets': 'null', 'orders': 'null'}")
-    private Users users;
-    // Constructor that takes an entity Notice
+    @Schema(example = "null")
+    private long userId;
+
     public NoticeDTO(Notice notice) {
         this.id = notice.getId();
         this.username = notice.getUsername();
@@ -34,6 +33,8 @@ public class NoticeDTO {
         this.contents = notice.getContents();
         this.email = notice.getEmail();
         this.createdDate = notice.getCreatedDate();
-        this.users=notice.getUsers();
+        if(notice.getUsers()!=null){
+            this.userId=notice.getUsers().getId();
+        }
     }
 }

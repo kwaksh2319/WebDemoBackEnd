@@ -68,8 +68,8 @@ public class ProductServiceImpl implements ProductService{
     private Products ConverEntity(Long id, ProductsDTO productsDTO){
 
         Optional<Products> product=productsCustomRepository.findById(id);
-        Long category_id=productsDTO.getId();
-        Optional<Category> updateCategory =categoryService.findById(category_id);
+        Long categoryId=productsDTO.getCategoryId();
+        Optional<Category> updateCategory =categoryService.findById(categoryId);
         product.get().setProductName(productsDTO.getProductName());
         product.get().setDescribe(productsDTO.getDescribe());
         product.get().setPicture(productsDTO.getPicture());

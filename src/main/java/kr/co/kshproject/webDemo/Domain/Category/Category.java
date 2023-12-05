@@ -43,7 +43,7 @@ public class Category {
     @Setter
     private Category parentCategory;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="category-products")
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Products> products = new HashSet<>();
 

@@ -2,6 +2,7 @@ package kr.co.kshproject.webDemo.interfaces.Notice;
 
 import kr.co.kshproject.webDemo.Applicaiton.Notice.NoticeService;
 import kr.co.kshproject.webDemo.Domain.Notice.Notice;
+import kr.co.kshproject.webDemo.Domain.Notice.NoticeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,29 +24,29 @@ public class NoticeController {
    }
 
    @PostMapping
-   public ResponseEntity<Notice> save(@RequestBody Notice notice){
-        return ResponseEntity.ok(noticeService.save(notice));
+   public ResponseEntity<Notice> save(@RequestBody NoticeDTO noticeDTO){
+        return ResponseEntity.ok(noticeService.save(noticeDTO));
    }
 
     @GetMapping
-    public ResponseEntity< Map<String,List> > findAll(){
-        return ResponseEntity.ok( noticeService.findAllWithComments(1));
+    public ResponseEntity< List<NoticeDTO>> findAll(){
+        return ResponseEntity.ok( noticeService.findAll());
     }
 
-    @GetMapping("/{page}")
-    public ResponseEntity< Map<String,List> > findAll(@PathVariable int page){
-        return ResponseEntity.ok( noticeService.findAllWithComments(page));
+    @GetMapping("/{page}/{size}")
+    public ResponseEntity< Map<String,List> > findAll(@PathVariable int page, @PathVariable int size){
+        return ResponseEntity.ok( noticeService.findAll(page,size));
    }
 
-   @GetMapping("/{page}/{id}")
-   public ResponseEntity<Notice> findWithCommentsById(@PathVariable int page,@PathVariable Long id){
-        Optional<Notice> notice=noticeService.findWithCommentsById(page,id);
-        return ResponseEntity.ok( notice.get() );
+   @GetMapping("/{id}")
+   public ResponseEntity<Optional<Notice>> findById(@PathVariable Long id){
+        Optional<Notice> notice=noticeService.findById(id);
+        return ResponseEntity.ok( notice );
    }
 
    @PutMapping("/{id}")
-   public ResponseEntity<Notice> update(@PathVariable Long id, @RequestBody Notice notice){
-       return ResponseEntity.ok(noticeService.update(id,notice));
+   public ResponseEntity<Notice> update(@PathVariable Long id, @RequestBody NoticeDTO noticeDTO){
+       return ResponseEntity.ok(noticeService.update(id,noticeDTO));
    }
 
    @DeleteMapping("/{id}")

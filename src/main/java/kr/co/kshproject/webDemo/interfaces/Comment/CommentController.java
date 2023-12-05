@@ -2,12 +2,14 @@ package kr.co.kshproject.webDemo.interfaces.Comment;
 
 import kr.co.kshproject.webDemo.Applicaiton.Comment.CommentService;
 import kr.co.kshproject.webDemo.Domain.Comment.Comment;
+import kr.co.kshproject.webDemo.Domain.Comment.CommentDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -21,24 +23,30 @@ public class CommentController {
         this.commentService=commentService;
     }
 
-    @PostMapping("/{page}/{noticeid}/{userid}")
-    public ResponseEntity<Comment> save(@PathVariable int page, @PathVariable Long noticeid,@PathVariable Long userid, @RequestBody Comment comment) {
-        return ResponseEntity.ok(commentService.save(page,noticeid,userid,comment));
+    @PostMapping
+    public ResponseEntity<Comment> save(@RequestBody CommentDTO commentDTO){
+        return ResponseEntity.ok(commentService.save(commentDTO));
     }
 
     @GetMapping
-    public ResponseEntity<List<Comment>> findAll(){
+    public ResponseEntity< List<CommentDTO>> findAll(){
         return ResponseEntity.ok( commentService.findAll());
     }
 
+    @GetMapping("/{page}/{size}")
+    public ResponseEntity<Map<String,List>> findAll(@PathVariable int page, @PathVariable int size){
+        return ResponseEntity.ok( commentService.findAll(page,size));
+    }
+
     @GetMapping("/{id}")
-    public Optional<Comment> findById(@PathVariable Long id){
-        return commentService.findById(id);
+    public ResponseEntity<Optional<Comment>> findById(@PathVariable Long id){
+        Optional<Comment> comment=commentService.findById(id);
+        return ResponseEntity.ok( comment );
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Comment> update(@PathVariable Long id, @RequestBody Comment comment){
-        return ResponseEntity.ok(commentService.update(id,comment));
+    public ResponseEntity<Comment> update(@PathVariable Long id, @RequestBody CommentDTO commentDTO){
+        return ResponseEntity.ok(commentService.update(id,commentDTO));
     }
 
     @DeleteMapping("/{id}")
