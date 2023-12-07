@@ -51,8 +51,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Products update(Long id, ProductsDTO productsDTO) {
-        return productsRepository.save(ConverEntity(id,productsDTO));
+    public void update(Long id, ProductsDTO productsDTO) {
+        productsRepository.save(ConverEntity(id,productsDTO));
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ProductServiceImpl implements ProductService{
         product.get().setPrice(productsDTO.getPrice());
 
         if(updateCategory.isPresent()==true){
-            product.get().setCategory( updateCategory.get());
+            product.get().setCategory(updateCategory.get());
         }
 
         return product.get();

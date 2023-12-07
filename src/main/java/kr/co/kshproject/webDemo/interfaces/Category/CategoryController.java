@@ -5,11 +5,12 @@ import kr.co.kshproject.webDemo.Domain.Category.Category;
 import kr.co.kshproject.webDemo.Domain.Category.CategoryDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -28,18 +29,24 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> findAll(){
+    public ResponseEntity<List<CategoryDTO>> findAll(){
         return ResponseEntity.ok( categoryService.findAll() );
     }
 
     @GetMapping("/{page}/{size}")
-    public ResponseEntity<Page<Category>> findAll(@PathVariable int page, @PathVariable int size){
+    public ResponseEntity<Map<String,List>> findAll(@PathVariable int page, @PathVariable int size){
         return ResponseEntity.ok( categoryService.findAll(page,size) );
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Category>> findById(@PathVariable Long id){
+        Optional<Category> category=categoryService.findById(id);
+        return ResponseEntity.ok( category );
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Category> update(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO){
-        return ResponseEntity.ok(categoryService.update(id,categoryDTO));
+    public void update(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO){
+        categoryService.update(id,categoryDTO);
     }
 
     @DeleteMapping("/{id}")

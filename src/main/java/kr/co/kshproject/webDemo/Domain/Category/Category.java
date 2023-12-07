@@ -37,7 +37,7 @@ public class Category {
     @Column(name = "update_date")
     private String updateDate;
 
-    @JsonBackReference
+    @JsonBackReference(value="category-parentCategory")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="category_id", nullable = true)
     @Setter
@@ -47,7 +47,7 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Products> products = new HashSet<>();
 
-    @JsonManagedReference
+    @JsonManagedReference(value="category-parentCategory")
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Category> childCategories = new HashSet<>();
 
@@ -55,6 +55,6 @@ public class Category {
         this.categoryName=categoryDTO.getCategoryName();
         this.createdDate=categoryDTO.getCreatedDate();
         this.updateDate=categoryDTO.getUpdateDate();
-        this.parentCategory=categoryDTO.getParentCategory();
+       // this.parentCategory=categoryDTO.getParentCategory();
     }
 }

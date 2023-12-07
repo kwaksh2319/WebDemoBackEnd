@@ -11,6 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDTO {
+    @Schema(example  = "null")
+    private Long id;
     @Schema(example  = "카테고리명")
     private String categoryName;
     @Schema(example  = "생성날짜")
@@ -18,12 +20,15 @@ public class CategoryDTO {
     @Schema(example  = "업데이트날짜")
     private String updateDate;
     @Schema(example  = "null")
-    private Category parentCategory;
+    private Long parentCategoryId;
 
     public CategoryDTO(Category category){
+        this.id=category.getId();
         this.categoryName=category.getCategoryName();
         this.createdDate=category.getCreatedDate();
         this.updateDate=category.getUpdateDate();
-        this.parentCategory=category.getParentCategory();
+        if(category.getParentCategory()!=null){
+            this.parentCategoryId=category.getParentCategory().getId();
+        }
     }
 }

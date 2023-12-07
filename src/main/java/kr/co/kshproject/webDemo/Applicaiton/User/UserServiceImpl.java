@@ -47,12 +47,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Users update(Long id,UsersDTO usersDTO) {
-        Users updateUser=converEntity(id,usersDTO);
-        if(updateUser==null){
-            return null;
-        }
-        return usersRepository.save(updateUser);
+    public void update(Long id,UsersDTO usersDTO) {
+         usersRepository.save(convertEntity(id,usersDTO));
     }
 
     @Override
@@ -65,15 +61,13 @@ public class UserServiceImpl implements UserService{
         usersRepository.deleteAll();
     }
 
-    private Users converEntity(Long id,UsersDTO usersDTO){
+    private Users convertEntity(Long id,UsersDTO usersDTO){
         Optional<Users> user=usersCustomRepository.findById(id);
-        if(user.isPresent()==false){
-            return null;
-        }
-        user.get().setName(usersDTO.getName());
-        user.get().setEmail(usersDTO.getEmail());
-        user.get().setLevel(usersDTO.getLevel());
+
         user.get().setUsername(usersDTO.getUsername());
+        user.get().setEmail(usersDTO.getEmail());
+        user.get().setName(usersDTO.getName());
+        user.get().setLevel(usersDTO.getLevel());
         user.get().setPassword(usersDTO.getPassword());
 
         return user.get();

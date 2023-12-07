@@ -32,7 +32,7 @@ public class UsersCustomRepositoryImpl implements UsersCustomRepository{
     @Override
     public Optional<Users> findById(Long id) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        //Notice 사용 이유는 댓글들을 불러오기때문
+
         CriteriaQuery<Users> cq = cb.createQuery(Users.class);
         Root<Users> user = cq.from(Users.class);
         user.fetch("comments", JoinType.LEFT);

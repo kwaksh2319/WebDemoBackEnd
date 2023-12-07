@@ -5,11 +5,12 @@ import kr.co.kshproject.webDemo.Domain.Baskets.Baskets;
 import kr.co.kshproject.webDemo.Domain.Baskets.BasketsDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -28,13 +29,17 @@ public class BasketController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Baskets>> findAll(){
+    public ResponseEntity<List<BasketsDTO>> findAll(){
         return ResponseEntity.ok( basketService.findAll() );
     }
 
     @GetMapping("/{page}/{size}")
-    public ResponseEntity<Page<Baskets>> findAll(@PathVariable int page, @PathVariable int size){
+    public ResponseEntity<Map<String,List>> findAll(@PathVariable int page, @PathVariable int size){
         return ResponseEntity.ok( basketService.findAll(page,size) );
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Baskets>> findById(@PathVariable Long id ){
+        return ResponseEntity.ok(basketService.findById(id));
     }
 
     @PutMapping("/{id}")

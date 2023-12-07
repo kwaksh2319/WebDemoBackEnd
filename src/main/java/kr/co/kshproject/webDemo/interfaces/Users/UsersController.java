@@ -34,7 +34,7 @@ public class UsersController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Users>> findAll(@PathVariable Long id){
+    public ResponseEntity<Optional<Users>> findById(@PathVariable Long id){
         return ResponseEntity.ok( usersService.findById(id) );
     }
 
@@ -44,8 +44,8 @@ public class UsersController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Users> update(@PathVariable Long id, @RequestBody UsersDTO usersDTO){
-        return ResponseEntity.ok(usersService.update(id,usersDTO));
+    public void update(@PathVariable Long id, @RequestBody UsersDTO usersDTO){
+         usersService.update(id,usersDTO);
     }
 
     @DeleteMapping("/{id}")

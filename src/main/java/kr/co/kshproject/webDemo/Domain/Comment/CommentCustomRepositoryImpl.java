@@ -20,7 +20,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CommentCustomRepositoryImpl implements CommentCustomRepository{
     @PersistenceContext
     private EntityManager entityManager;
-
     private final CommonService commonService;
 
     @Autowired
@@ -32,18 +31,17 @@ public class CommentCustomRepositoryImpl implements CommentCustomRepository{
     public Optional<Comment> findById(Long id) {
         //Criteria API 사용
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        //Notice 사용 이유는 댓글들을 불러오기때문
+
         CriteriaQuery<Comment> cq = cb.createQuery(Comment.class);
 
-        //from Notice
-        Root<Comment> comment = cq.from(Comment.class);
-
         //cq 쿼리 실행
+        Root<Comment> comment= cq.from(Comment.class);
+        cq.where(cb.equal(comment.get("id"), id));
+
         TypedQuery<Comment> query = entityManager.createQuery(cq);
         List<Comment> result = query.getResultList();
         //삼항 연산자 result 비엇을시 empty() 존재지 resutl 리턴
         return result.isEmpty() ? Optional.empty(): Optional.of(result.get(0));
-
     }
 
     @Override

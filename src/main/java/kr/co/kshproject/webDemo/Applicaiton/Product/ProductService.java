@@ -12,7 +12,7 @@ public interface ProductService {
     List<ProductsDTO>  findAll();
     Map<String,List> findAll(int page, int size);
     Optional<Products> findById(Long id);
-    Products update(Long id, ProductsDTO productsDTO);
+    void update(Long id, ProductsDTO productsDTO);
     void deleteById(Long id);
     void deleteAll();
 }

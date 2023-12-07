@@ -22,18 +22,6 @@ public class BeginOrder {
     @Column(name = "ID")
     private Long id; //key
 
-    @JsonBackReference(value="products-beginOrders")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="product_id")
-    @Setter
-    private Products products;
-
-    @JsonBackReference(value="orders-beginOrders")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="order_id")
-    @Setter
-    private Orders orders;
-
     @NotNull
     @Setter
     private Long quantity;
@@ -52,12 +40,24 @@ public class BeginOrder {
     @Column(name = "update_date")
     private String updateDate;
 
+    @JsonBackReference(value="products-beginOrders")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="product_id")
+    @Setter
+    private Products products;
+
+    @JsonBackReference(value="orders-beginOrders")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="order_id")
+    @Setter
+    private Orders orders;
+
     public BeginOrder(BeginOrderDTO beginOrderDTO){
-        this.products=beginOrderDTO.getProducts();
-        this.orders=beginOrderDTO.getOrders();
         this.quantity= beginOrderDTO.getQuantity();
         this.picture=beginOrderDTO.getPicture();
         this.createdDate= beginOrderDTO.getCreatedDate();
         this.updateDate= beginOrderDTO.getUpdateDate();
+       // this.products=beginOrderDTO.getProducts();
+      //  this.orders=beginOrderDTO.getOrders();
     }
 }

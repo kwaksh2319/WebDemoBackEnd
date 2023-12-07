@@ -67,7 +67,7 @@ public class Orders {
         this.cancel=ordersDTO.getCancel();
         this.createdDate= ordersDTO.getCreatedDate();
         this.updateDate= ordersDTO.getUpdateDate();
-        this.users=ordersDTO.getUsers();
+       // this.users=ordersDTO.getUsers();
     }
 
 }

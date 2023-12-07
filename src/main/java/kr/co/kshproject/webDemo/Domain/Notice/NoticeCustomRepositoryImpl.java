@@ -71,7 +71,6 @@ public class NoticeCustomRepositoryImpl implements NoticeCustomRepository {
         TypedQuery<NoticeDTO> query = entityManager.createQuery(cq);
 
         return query.getResultList();
-
     }
 
     @Override

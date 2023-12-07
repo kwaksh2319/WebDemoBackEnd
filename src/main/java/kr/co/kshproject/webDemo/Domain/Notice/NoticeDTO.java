@@ -24,7 +24,7 @@ public class NoticeDTO {
     @Schema(example  = "생성날짜")
     private String createdDate;
     @Schema(example = "null")
-    private long userId;
+    private Long userId;
 
     public NoticeDTO(Notice notice) {
         this.id = notice.getId();

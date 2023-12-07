@@ -6,11 +6,12 @@ import kr.co.kshproject.webDemo.Domain.Orders.Orders;
 import kr.co.kshproject.webDemo.Domain.Orders.OrdersDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -29,13 +30,17 @@ public class OrdersController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Orders>> findAll(){
+    public ResponseEntity<List<OrdersDTO>> findAll(){
         return ResponseEntity.ok( ordersService.findAll() );
     }
 
     @GetMapping("/{page}/{size}")
-    public ResponseEntity<Page<Orders>> findAll(@PathVariable int page, @PathVariable int size){
+    public ResponseEntity<Map<String,List>> findAll(@PathVariable int page, @PathVariable int size){
         return ResponseEntity.ok( ordersService.findAll(page,size) );
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Orders>> findById(@PathVariable Long id){
+        return ResponseEntity.ok(ordersService.findById(id));
     }
 
     @PutMapping("/{id}")
@@ -52,6 +57,5 @@ public class OrdersController {
     public void deleteAll(){
         ordersService.deleteAll();
     }
-
 
 }

@@ -13,7 +13,7 @@ public interface UserService {
 
     Map<String,List> findAll(int page, int size);
     Optional<Users> findById(Long id);
-    Users update(Long id, UsersDTO usersDTO);
+    void update(Long id, UsersDTO usersDTO);
     void deleteById(Long id);
     void deleteAll();
 

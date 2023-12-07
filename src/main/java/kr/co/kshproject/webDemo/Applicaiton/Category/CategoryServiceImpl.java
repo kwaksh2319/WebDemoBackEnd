@@ -1,16 +1,16 @@
 package kr.co.kshproject.webDemo.Applicaiton.Category;
 
 import kr.co.kshproject.webDemo.Domain.Category.Category;
+import kr.co.kshproject.webDemo.Domain.Category.CategoryCustomRepository;
 import kr.co.kshproject.webDemo.Domain.Category.CategoryDTO;
 import kr.co.kshproject.webDemo.Domain.Category.CategoryRepository;
+import kr.co.kshproject.webDemo.Domain.Users.Users;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -18,9 +18,13 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService{
     private final CategoryRepository categoryRepository;
 
+    private final CategoryCustomRepository categoryCustomRepository;
+
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository){
+    public CategoryServiceImpl(CategoryRepository categoryRepository,
+                               CategoryCustomRepository categoryCustomRepository){
         this.categoryRepository=categoryRepository;
+        this.categoryCustomRepository=categoryCustomRepository;
     }
 
     @Override
@@ -30,24 +34,23 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> findAll() {
+        return categoryCustomRepository.findAll();
     }
 
     @Override
-    public Page<Category> findAll(int page, int size) {
-        Pageable pageable= PageRequest.of(page,size);
-        return categoryRepository.findAll(pageable);
+    public Map<String,List> findAll(int page, int size) {
+        return categoryCustomRepository.findAll(page,size);
     }
 
     @Override
     public Optional<Category> findById(Long id) {
-        return categoryRepository.findById(id);
+        return categoryCustomRepository.findById(id);
     }
 
     @Override
-    public Category update(Long id, CategoryDTO categoryDTO) {
-        return categoryRepository.save(ConverEntity(id,categoryDTO));
+    public void update(Long id, CategoryDTO categoryDTO) {
+         categoryRepository.save(ConvertEntity(id,categoryDTO));
     }
 
     @Override
@@ -60,13 +63,18 @@ public class CategoryServiceImpl implements CategoryService{
         categoryRepository.deleteAll();
     }
 
-    private Category ConverEntity(Long id, CategoryDTO categoryDTO){
-        Optional<Category> category=categoryRepository.findById(id);
-        category.get().setCategoryName(categoryDTO.getCategoryName());
+    private Category ConvertEntity(Long id, CategoryDTO categoryDTO){
 
-       // category.get().setParentCategory(categoryDTO.getParentCategory());
+        Optional<Category> category=categoryCustomRepository.findById(id);
+         Long parentCategoryId=categoryDTO.getParentCategoryId();
+        Optional<Category>  parentCategory=findById(parentCategoryId);
+        category.get().setCategoryName(categoryDTO.getCategoryName());
         category.get().setCreatedDate(categoryDTO.getCreatedDate());
         category.get().setUpdateDate(categoryDTO.getUpdateDate());
+
+        if(parentCategory.isPresent()==true){
+            category.get().setParentCategory(parentCategory.get());
+        }
 
         return category.get();
     }

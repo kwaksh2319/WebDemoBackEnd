@@ -1,16 +1,19 @@
 package kr.co.kshproject.webDemo.Applicaiton.BeginOrder;
 
+import kr.co.kshproject.webDemo.Applicaiton.Order.OrdersService;
+import kr.co.kshproject.webDemo.Applicaiton.Product.ProductService;
 import kr.co.kshproject.webDemo.Domain.BeginOrder.BeginOrder;
+import kr.co.kshproject.webDemo.Domain.BeginOrder.BeginOrderCustomRepository;
 import kr.co.kshproject.webDemo.Domain.BeginOrder.BeginOrderDTO;
 import kr.co.kshproject.webDemo.Domain.BeginOrder.BeginOrderRepository;
+import kr.co.kshproject.webDemo.Domain.Orders.Orders;
+import kr.co.kshproject.webDemo.Domain.Products.Products;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -18,9 +21,21 @@ import java.util.Optional;
 public class BeginOrderServiceImpl implements BeginOrderService{
     private final BeginOrderRepository beginOrderRepository;
 
+    private final BeginOrderCustomRepository beginOrderCustomRepository;
+
+    private final ProductService productService;
+    private final OrdersService ordersService;
+
     @Autowired
-    public BeginOrderServiceImpl(BeginOrderRepository beginOrderRepository){
+    public BeginOrderServiceImpl(BeginOrderRepository beginOrderRepository,
+                                 BeginOrderCustomRepository beginOrderCustomRepository,
+                                 ProductService productService,
+                                 OrdersService ordersService
+                                 ){
         this.beginOrderRepository=beginOrderRepository;
+        this.beginOrderCustomRepository=beginOrderCustomRepository;
+        this.productService=productService;
+        this.ordersService=ordersService;
     }
 
     @Override
@@ -30,19 +45,18 @@ public class BeginOrderServiceImpl implements BeginOrderService{
     }
 
     @Override
-    public List<BeginOrder> findAll() {
-        return beginOrderRepository.findAll();
+    public List<BeginOrderDTO> findAll() {
+        return beginOrderCustomRepository.findAll();
     }
 
     @Override
-    public Page<BeginOrder> findAll(int page, int size) {
-        Pageable pageable= PageRequest.of(page,size);
-        return beginOrderRepository.findAll(pageable);
+    public Map<String,List> findAll(int page, int size) {
+        return beginOrderCustomRepository.findAll(page,size);
     }
 
     @Override
     public Optional<BeginOrder> findById(Long id) {
-        return beginOrderRepository.findById(id);
+        return beginOrderCustomRepository.findById(id);
     }
 
     @Override
@@ -61,14 +75,21 @@ public class BeginOrderServiceImpl implements BeginOrderService{
     }
 
     private BeginOrder ConverEntity(Long id, BeginOrderDTO beginOrderDTO){
-        Optional<BeginOrder> beginOrder=beginOrderRepository.findById(id);
-        beginOrder.get().setOrders(beginOrderDTO.getOrders());
+        Optional<BeginOrder> beginOrder= beginOrderRepository.findById(id);
+        Optional<Products> product = productService.findById(beginOrderDTO.getProductId());
+        Optional<Orders> order = ordersService.findById(beginOrderDTO.getOrderId());
+
         beginOrder.get().setPicture(beginOrderDTO.getPicture());
-        beginOrder.get().setProducts(beginOrderDTO.getProducts());
         beginOrder.get().setQuantity(beginOrderDTO.getQuantity());
         beginOrder.get().setCreatedDate(beginOrderDTO.getCreatedDate());
         beginOrder.get().setUpdateDate(beginOrderDTO.getUpdateDate());
 
+        if(product.isPresent()){
+            beginOrder.get().setProducts(product.get());
+        }
+        if(order.isPresent()){
+            beginOrder.get().setOrders(order.get());
+        }
         return beginOrder.get();
     }
 }
