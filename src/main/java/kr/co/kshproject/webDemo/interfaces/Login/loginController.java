@@ -2,24 +2,35 @@ package kr.co.kshproject.webDemo.interfaces.Login;
 
 import kr.co.kshproject.webDemo.Applicaiton.IpAddress.IpAddressService;
 import kr.co.kshproject.webDemo.Applicaiton.UsersDetailService;
+import kr.co.kshproject.webDemo.JWT.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
-@Controller
+@RestController
+@RequestMapping("/login")
 public class loginController {
 
+
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
+
     @Autowired
-    private AuthenticationManager authenticationManager;
+    public loginController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
     @Autowired
     private UsersDetailService usersDetailService;
     @Autowired

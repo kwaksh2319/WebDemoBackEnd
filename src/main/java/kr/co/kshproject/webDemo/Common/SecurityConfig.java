@@ -1,6 +1,8 @@
 package kr.co.kshproject.webDemo.Common;
 
 import kr.co.kshproject.webDemo.Applicaiton.UsersDetailService;
+import kr.co.kshproject.webDemo.JWT.JwtConfigurer;
+import kr.co.kshproject.webDemo.JWT.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +13,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,18 +27,23 @@ public class SecurityConfig{
     @Lazy
     private AuthenticationProvider myAuthenticationProvider;
 
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .anyRequest().permitAll()
+        http
+                .httpBasic().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .headers().frameOptions().disable() // H2 콘솔 사용을 위해 X-Frame-Options 비활성화
+                .authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .csrf().disable(); // H2 콘솔과의 CSRF 충돌 방지
+                .apply(new JwtConfigurer(jwtTokenProvider));
 
-        http.authenticationProvider(myAuthenticationProvider);
         return http.build();
     }
 
