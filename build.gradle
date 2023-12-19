@@ -23,6 +23,7 @@ dependencies {
     implementation 'org.webjars:bootstrap:5.0.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql:42.2.15'
     implementation 'com.h2database:h2:1.4.200'
     implementation 'org.hibernate:hibernate-core'
     implementation 'org.hibernate:hibernate-entitymanager'
