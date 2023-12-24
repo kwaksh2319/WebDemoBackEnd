@@ -15,7 +15,7 @@ spring:
         web-allow-others: true
   datasource:
     #initialization-mode: always
-    url:  jdbc:postgresql://kwaksh2319.cfgesasomkks.us-east-1.rds.amazonaws.com:5432/kwakshdb #jdbc:h2:file:~/db/webDemo # jdbc:h2:~/db/webDemo
+    url:   #jdbc:h2:file:~/db/webDemo # jdbc:h2:~/db/webDemo
     driver-class-name: org.postgresql.Driver  #  org.h2.Driver
     username: kwaksh2319
     password: rhkr1070912!
