@@ -17,8 +17,7 @@ spring:
     #initialization-mode: always
     url:   #jdbc:h2:file:~/db/webDemo # jdbc:h2:~/db/webDemo
     driver-class-name: org.postgresql.Driver  #  org.h2.Driver
-    username: kwaksh2319
-    password: rhkr1070912!
+
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
     # connection-test-query: SELECT 1
