@@ -6,8 +6,10 @@ import kr.co.kshproject.webDemo.Domain.Users.UsersDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,7 +26,7 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<Users> save(@RequestBody UsersDTO usersDTO){
+    public ResponseEntity<Users> save(@Validated @RequestBody UsersDTO usersDTO){
         return ResponseEntity.ok(usersService.save(usersDTO));
     }
 
@@ -34,7 +36,7 @@ public class UsersController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Users>> findById(@PathVariable Long id){
+    public ResponseEntity<Optional<Users>> findById(@Min(1) @PathVariable Long id){
         return ResponseEntity.ok( usersService.findById(id) );
     }
 
@@ -44,12 +46,12 @@ public class UsersController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Long id, @RequestBody UsersDTO usersDTO){
+    public void update(@Min(1) @PathVariable Long id, @Validated @RequestBody UsersDTO usersDTO){
          usersService.update(id,usersDTO);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id){
+    public void deleteById(@Min(1) @PathVariable Long id){
         usersService.deleteById(id);
     }
 

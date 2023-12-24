@@ -15,7 +15,8 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService{
-
+    private final int MAX_PAGE_SIZE = 1000;
+    private final int MAX_ID = 10000000;
     private final UsersRepository usersRepository;
     private final UsersCustomRepository usersCustomRepository;
 
@@ -38,11 +39,17 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Map<String,List> findAll(int page, int size) {
+        if (page < 0  || size <= 0 || size > MAX_PAGE_SIZE || page > MAX_PAGE_SIZE) {
+            throw new IllegalArgumentException("페이지 또는 사이즈 값이 유효하지 않습니다.");
+        }
         return usersCustomRepository.findAll(page,size);
     }
 
     @Override
     public Optional<Users> findById(Long id) {
+        if (id < 0 || id > MAX_ID ) {
+            throw new IllegalArgumentException("id 값이 유효하지 않습니다.");
+        }
         return usersCustomRepository.findById(id);
     }
 
@@ -53,6 +60,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteById(Long id) {
+        if (id < 0 || id > MAX_ID ) {
+            throw new IllegalArgumentException("id 값이 유효하지 않습니다.");
+        }
         usersRepository.deleteById(id);
     }
 

@@ -1,9 +1,10 @@
 package kr.co.kshproject.webDemo.Common;
-import org.springframework.stereotype.Component;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
+import org.springframework.stereotype.Component;
 
 
 @Component
@@ -25,6 +26,8 @@ public class WebSocketClient extends WebSocketListener {
         // 서버로 메시지를 전송합니다.
         webSocket.send("Hello, WebSocket Server!");
     }
+
+
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {

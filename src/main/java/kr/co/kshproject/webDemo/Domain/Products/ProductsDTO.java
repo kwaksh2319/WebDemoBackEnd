@@ -5,6 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -14,18 +19,26 @@ public class ProductsDTO {
     @Schema(example  = "null")
     private Long id; //key
     @Schema(example  = "상품명")
+    @NotNull
+    @NotBlank
     private String productName;
     @Schema(example  = "상품설명")
     private String describe;
     @Schema(example  = "1000")
+    @Range(min=1000, max=100000000)
     private Long price;
     @Schema(example  = "상품사진")
+    @NotBlank
+    @NotNull
     private String picture;
     @Schema(example  = "false")
+    @NotNull
     private Boolean soldOut;
-    @Schema(example  = "생성일")
+    @Schema(example  = "1900-01-01")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private String createdDate;
-    @Schema(example  = "업데이트날짜")
+    @Schema(example  = "1900-01-01")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private String updateDate;
     @Schema(example  = "null")
     private Long categoryId;

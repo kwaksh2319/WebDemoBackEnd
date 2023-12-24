@@ -8,6 +8,8 @@ import kr.co.kshproject.webDemo.Domain.Orders.Orders;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -32,7 +34,7 @@ public class Users {
     @Setter
     private String username; //사용자 아이디
 
-    @NotEmpty
+    @Email
     @Setter
     private String email; //이메일
 
@@ -44,7 +46,7 @@ public class Users {
     @Setter
     private Long level; // 계정권한 레벨
 
-    @NotEmpty
+    @NotBlank
     @Setter
     private String password;
 

@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -14,10 +18,17 @@ public class CommentDTO {
     @Schema(example  = "null")
     private Long id;
     @Schema(example  = "닉네임")
+    @NotNull
+    @NotBlank
     private String userName;
     @Schema(example  = "댓글")
+    @NotNull
+    @NotBlank
     private String contents;
-    @Schema(example  = "생성일자")
+    @Schema(example  = "1900-01-01")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
+    @NotBlank
     private String createdDate;
     @Schema(example  = "null")
     private Long noticeId;
