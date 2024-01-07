@@ -1,15 +1,7 @@
 package kr.co.kshproject.webDemo.interfaces.Login;
 
-import kr.co.kshproject.webDemo.Applicaiton.IpAddress.IpAddressService;
-import kr.co.kshproject.webDemo.Applicaiton.UsersDetailService;
-import kr.co.kshproject.webDemo.JWT.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,14 +13,15 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/login")
 public class loginController {
 
-
+   /*
     private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
+    //private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public loginController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
+    public loginController(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
+        // JwtTokenProvider jwtTokenProvider
+        //this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Autowired
@@ -47,7 +40,7 @@ public class loginController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build(); // 로그아웃 후 리다이렉트할 경로
-    }
+    }*/
    /*
     @PostMapping("/loginProxy")
     public ResponseEntity<?> loginUser(@RequestBody Users usersData, HttpSession session, HttpServletRequest request){

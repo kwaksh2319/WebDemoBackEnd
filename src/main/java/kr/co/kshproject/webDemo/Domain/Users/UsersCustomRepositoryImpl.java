@@ -2,6 +2,9 @@ package kr.co.kshproject.webDemo.Domain.Users;
 
 import kr.co.kshproject.webDemo.Common.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -11,10 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
@@ -23,6 +23,8 @@ public class UsersCustomRepositoryImpl implements UsersCustomRepository{
     private EntityManager entityManager;
 
     private final CommonService commonService;
+
+    private Collection<GrantedAuthority> authorities = new ArrayList<>();
 
     @Autowired
     public UsersCustomRepositoryImpl( CommonService commonService){
@@ -106,5 +108,37 @@ public class UsersCustomRepositoryImpl implements UsersCustomRepository{
 
         //결과값 리턴
         return userDTOList;
+    }
+
+    @Override
+    public User findByUsername(String username) throws  Exception {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Users> cq = cb.createQuery(Users.class);
+        Root<Users> user = cq.from(Users.class);
+        user.fetch("comments", JoinType.LEFT);
+        user.fetch("notices", JoinType.LEFT);
+        user.fetch("baskets", JoinType.LEFT);
+        user.fetch("orders", JoinType.LEFT);
+
+        cq.where(cb.equal(user.get("username"), username));
+        //cq 쿼리 실행
+        TypedQuery<Users> query = entityManager.createQuery(cq);
+        List<Users> result = query.getResultList();
+        //삼항 연산자 result 비엇을시 empty() 존재지 resutl 리턴
+
+        if( result.get(0).getLevel() == 1 ){
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }else {
+            authorities.add(new SimpleGrantedAuthority("ROLE_CUSTOM"));
+        }
+
+        User tmpuser=new User(result.get(0).getUsername(),result.get(0).getPassword(),getAuthorities());
+
+        return tmpuser;
+    }
+
+    private Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
     }
 }

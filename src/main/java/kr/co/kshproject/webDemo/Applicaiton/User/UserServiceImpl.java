@@ -14,21 +14,28 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements  UserService {
     private final int MAX_PAGE_SIZE = 1000;
     private final int MAX_ID = 10000000;
     private final UsersRepository usersRepository;
     private final UsersCustomRepository usersCustomRepository;
 
+   // private final PasswordEncoder passwordEncoder;
+
+    private List<String> roles;
+
     @Autowired
     public UserServiceImpl(UsersRepository usersRepository, UsersCustomRepository usersCustomRepository){
         this.usersRepository=usersRepository;
         this.usersCustomRepository=usersCustomRepository;
+      //  this.passwordEncoder = passwordEncoder;
+
     }
 
     @Override
     public Users save(UsersDTO usersDTO) {
         Users user= new Users(usersDTO);
+
         return usersRepository.save(user);
     }
 
@@ -71,6 +78,8 @@ public class UserServiceImpl implements UserService{
         usersRepository.deleteAll();
     }
 
+
+
     private Users convertEntity(Long id,UsersDTO usersDTO){
         Optional<Users> user=usersCustomRepository.findById(id);
 
@@ -82,4 +91,6 @@ public class UserServiceImpl implements UserService{
 
         return user.get();
     }
+
+
 }
