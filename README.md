@@ -5,7 +5,7 @@ WebDemoBackEnd
 
 <!---->
 운영 웹 서버 
-현재 서버는 **AWS**에서 **모바일 서버 Termux**로 이전되었습니다.
+현재 서버는 **AWS**에서 **모바일 물리 서버 Termux**로 이전되었습니다.
 
 
 [Live here](http://ddubi.ddns.net:8080/swagger-ui/index.html)
