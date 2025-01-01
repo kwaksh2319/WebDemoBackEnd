@@ -5,7 +5,7 @@ WebDemoBackEnd
 
 <!---->
 운영 웹 서버 
-서버가 aws -> 모바일 서버 termxu로 옮겼습니다. 
+서버가 aws -> 모바일 서버 termux로 옮겼습니다. 
 
 [Live here](http://ddubi.ddns.net:8080/swagger-ui/index.html)
 
